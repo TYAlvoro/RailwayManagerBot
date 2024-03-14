@@ -30,19 +30,6 @@
             "related": ".pdb;.xml"
           }
         }
-      },
-      "TelegramTool/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v6.0",
-        "dependencies": {
-          "Telegram.Bot": "20.0.0-alpha.1"
-        },
-        "compile": {
-          "bin/placeholder/TelegramTool.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/TelegramTool.dll": {}
-        }
       }
     }
   },
@@ -91,17 +78,11 @@
         "telegram.bot.20.0.0-alpha.1.nupkg.sha512",
         "telegram.bot.nuspec"
       ]
-    },
-    "TelegramTool/1.0.0": {
-      "type": "project",
-      "path": "../TelegramTool/TelegramTool.csproj",
-      "msbuildProject": "../TelegramTool/TelegramTool.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "Telegram.Bot >= 20.0.0-alpha.1",
-      "TelegramTool >= 1.0.0"
+      "Telegram.Bot >= 20.0.0-alpha.1"
     ]
   },
   "packageFolders": {
@@ -111,11 +92,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\RiderProjects\\RailwayManagerBot\\RailwayManagerBot\\RailwayManagerBot.csproj",
-      "projectName": "RailwayManagerBot",
-      "projectPath": "D:\\RiderProjects\\RailwayManagerBot\\RailwayManagerBot\\RailwayManagerBot.csproj",
+      "projectUniqueName": "D:\\RiderProjects\\RailwayManagerBot\\TelegramTool\\TelegramTool.csproj",
+      "projectName": "TelegramTool",
+      "projectPath": "D:\\RiderProjects\\RailwayManagerBot\\TelegramTool\\TelegramTool.csproj",
       "packagesPath": "C:\\Users\\Tamik\\.nuget\\packages\\",
-      "outputPath": "D:\\RiderProjects\\RailwayManagerBot\\RailwayManagerBot\\obj\\",
+      "outputPath": "D:\\RiderProjects\\RailwayManagerBot\\TelegramTool\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -136,11 +117,7 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {
-            "D:\\RiderProjects\\RailwayManagerBot\\TelegramTool\\TelegramTool.csproj": {
-              "projectPath": "D:\\RiderProjects\\RailwayManagerBot\\TelegramTool\\TelegramTool.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {
@@ -172,10 +149,6 @@
         "downloadDependencies": [
           {
             "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[6.0.26, 6.0.26]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Host.win-x64",
             "version": "[6.0.26, 6.0.26]"
           },
           {

@@ -10,12 +10,12 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("RailwayManagerBot")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("TelegramTool")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a8e9b44c87151cf98e96372b8dfcd2b1710b139a")]
-[assembly: System.Reflection.AssemblyProductAttribute("RailwayManagerBot")]
-[assembly: System.Reflection.AssemblyTitleAttribute("RailwayManagerBot")]
+[assembly: System.Reflection.AssemblyProductAttribute("TelegramTool")]
+[assembly: System.Reflection.AssemblyTitleAttribute("TelegramTool")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 
 // Создано классом WriteCodeFragment MSBuild.

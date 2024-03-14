@@ -1,0 +1,13 @@
+D:\RiderProjects\RailwayManagerBot\TelegramTool\bin\Debug\net6.0\TelegramTool.deps.json
+D:\RiderProjects\RailwayManagerBot\TelegramTool\bin\Debug\net6.0\TelegramTool.dll
+D:\RiderProjects\RailwayManagerBot\TelegramTool\bin\Debug\net6.0\TelegramTool.pdb
+D:\RiderProjects\RailwayManagerBot\TelegramTool\obj\Debug\net6.0\TelegramTool.csproj.AssemblyReference.cache
+D:\RiderProjects\RailwayManagerBot\TelegramTool\obj\Debug\net6.0\TelegramTool.GeneratedMSBuildEditorConfig.editorconfig
+D:\RiderProjects\RailwayManagerBot\TelegramTool\obj\Debug\net6.0\TelegramTool.AssemblyInfoInputs.cache
+D:\RiderProjects\RailwayManagerBot\TelegramTool\obj\Debug\net6.0\TelegramTool.AssemblyInfo.cs
+D:\RiderProjects\RailwayManagerBot\TelegramTool\obj\Debug\net6.0\TelegramTool.csproj.CoreCompileInputs.cache
+D:\RiderProjects\RailwayManagerBot\TelegramTool\obj\Debug\net6.0\TelegramTool.sourcelink.json
+D:\RiderProjects\RailwayManagerBot\TelegramTool\obj\Debug\net6.0\TelegramTool.dll
+D:\RiderProjects\RailwayManagerBot\TelegramTool\obj\Debug\net6.0\refint\TelegramTool.dll
+D:\RiderProjects\RailwayManagerBot\TelegramTool\obj\Debug\net6.0\TelegramTool.pdb
+D:\RiderProjects\RailwayManagerBot\TelegramTool\obj\Debug\net6.0\ref\TelegramTool.dll

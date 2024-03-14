@@ -6,13 +6,12 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v6.0": {
-      "RailwayManagerBot/1.0.0": {
+      "TelegramTool/1.0.0": {
         "dependencies": {
-          "Telegram.Bot": "20.0.0-alpha.1",
-          "TelegramTool": "1.0.0"
+          "Telegram.Bot": "20.0.0-alpha.1"
         },
         "runtime": {
-          "RailwayManagerBot.dll": {}
+          "TelegramTool.dll": {}
         }
       },
       "Newtonsoft.Json/13.0.1": {
@@ -33,19 +32,11 @@
             "fileVersion": "20.0.0.0"
           }
         }
-      },
-      "TelegramTool/1.0.0": {
-        "dependencies": {
-          "Telegram.Bot": "20.0.0-alpha.1"
-        },
-        "runtime": {
-          "TelegramTool.dll": {}
-        }
       }
     }
   },
   "libraries": {
-    "RailwayManagerBot/1.0.0": {
+    "TelegramTool/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
@@ -63,11 +54,6 @@
       "sha512": "sha512-CfqeVWWz1GlrO1aq491kIfGh7G7IdijAoLyfzZ2BygVj+ld86ry0PvqKicjIuq/43yHynshkiPOdnNQ9ku5yyw==",
       "path": "telegram.bot/20.0.0-alpha.1",
       "hashPath": "telegram.bot.20.0.0-alpha.1.nupkg.sha512"
-    },
-    "TelegramTool/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
     }
   }
 }
