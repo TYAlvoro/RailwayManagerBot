@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RailwayManagerBot")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+415996157520febbf1b4fb61eb2336185154f45d")]
 [assembly: System.Reflection.AssemblyProductAttribute("RailwayManagerBot")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RailwayManagerBot")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
