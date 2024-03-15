@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TelegramTool")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2cb6086b6d4623fb4330fcd9371282dc1d8a53f7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f9fe0d3acd599fbbf2458e593d0c3fde920ea9b6")]
 [assembly: System.Reflection.AssemblyProductAttribute("TelegramTool")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TelegramTool")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

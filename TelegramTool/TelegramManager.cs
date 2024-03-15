@@ -10,8 +10,15 @@ namespace TelegramTool;
 
 public class TelegramManager
 {
+    private Typewriter _typewriter;
+    private readonly TelegramBotClient _client;
     private const string Token = "7041448431:AAFHhgFzGwI0sSTt65toZt5za30Do0aOjpo";
-    private readonly TelegramBotClient _client = new(Token);
+
+    public TelegramManager()
+    {
+        _typewriter = new Typewriter();
+        _client = new(Token);
+    }
     
     public void StartBot()
     {
@@ -50,7 +57,8 @@ public class TelegramManager
 
         else if (message.Document is { } messageDocument)
         {
-            await HandleUserDocument(client, cancellationToken, messageDocument);
+            long chatId = message.Chat.Id;
+            await HandleUserDocument(client, chatId, cancellationToken, messageDocument);
         }
     }
     
@@ -71,8 +79,6 @@ public class TelegramManager
     private async Task HandleUserMessage(ITelegramBotClient client, long chatId, CancellationToken cancellationToken,
         string messageText)
     {
-        Typewriter typewriter = new Typewriter();
-        
         if (messageText == "/start")
         {
             await client.SendStickerAsync(
@@ -83,22 +89,43 @@ public class TelegramManager
         }
         else
         {
-            await typewriter.TypeMessageByWords(client, chatId, cancellationToken, $"You said: {messageText}");
-            await typewriter.TypeMessageBySymbols(client, chatId, cancellationToken, $"You said: {messageText}");
+            await _typewriter.TypeMessageByWords(client, chatId, cancellationToken, $"You said: {messageText}");
         }
     }
 
-    private async Task HandleUserDocument(ITelegramBotClient client, CancellationToken cancellationToken, 
+    private async Task HandleUserDocument(ITelegramBotClient client, long chatId, CancellationToken cancellationToken, 
         Document document)
     {
         var fileInfo = await client.GetFileAsync(document.FileId, cancellationToken);
         var filePath = fileInfo.FilePath;
-        var destinationFilePath = $"D:/Desktop/{document.FileName}";
+        
+        var fileExtension = Path.GetExtension(filePath);
+
+        if (fileExtension != ".csv" && fileExtension != ".json")
+        {
+            await _typewriter.TypeMessageByWords(client, chatId, cancellationToken,
+                "Поддерживаемые форматы: csv, json.");
+            return;
+        }
+        
+        var fileName = Path.GetFileNameWithoutExtension(document.FileName);
+        fileName = $"{fileName}_{chatId}{fileExtension}";
+        
+        char separator = Path.DirectorySeparatorChar;
+        var destinationFilePath =
+            $"..{separator}..{separator}..{separator}..{separator}WorkingFiles{separator}input{separator}{fileName}";
         
         await using var fileStream = File.Create(destinationFilePath);
         await client.DownloadFileAsync(
             filePath: filePath!,
             destination: fileStream,
             cancellationToken: cancellationToken);
+
+        await ProcessFile();
+    }
+
+    private async Task ProcessFile()
+    {
+        throw new NotImplementedException();
     }
 }
