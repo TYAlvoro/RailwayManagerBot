@@ -36,10 +36,19 @@
       },
       "TelegramTool/1.0.0": {
         "dependencies": {
-          "Telegram.Bot": "20.0.0-alpha.1"
+          "Telegram.Bot": "20.0.0-alpha.1",
+          "Tools": "1.0.0"
         },
         "runtime": {
           "TelegramTool.dll": {}
+        }
+      },
+      "Tools/1.0.0": {
+        "dependencies": {
+          "Telegram.Bot": "20.0.0-alpha.1"
+        },
+        "runtime": {
+          "Tools.dll": {}
         }
       }
     }
@@ -65,6 +74,11 @@
       "hashPath": "telegram.bot.20.0.0-alpha.1.nupkg.sha512"
     },
     "TelegramTool/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Tools/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

@@ -8,7 +8,8 @@
     ".NETCoreApp,Version=v6.0": {
       "TelegramTool/1.0.0": {
         "dependencies": {
-          "Telegram.Bot": "20.0.0-alpha.1"
+          "Telegram.Bot": "20.0.0-alpha.1",
+          "Tools": "1.0.0"
         },
         "runtime": {
           "TelegramTool.dll": {}
@@ -32,6 +33,14 @@
             "fileVersion": "20.0.0.0"
           }
         }
+      },
+      "Tools/1.0.0": {
+        "dependencies": {
+          "Telegram.Bot": "20.0.0-alpha.1"
+        },
+        "runtime": {
+          "Tools.dll": {}
+        }
       }
     }
   },
@@ -54,6 +63,11 @@
       "sha512": "sha512-CfqeVWWz1GlrO1aq491kIfGh7G7IdijAoLyfzZ2BygVj+ld86ry0PvqKicjIuq/43yHynshkiPOdnNQ9ku5yyw==",
       "path": "telegram.bot/20.0.0-alpha.1",
       "hashPath": "telegram.bot.20.0.0-alpha.1.nupkg.sha512"
+    },
+    "Tools/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }

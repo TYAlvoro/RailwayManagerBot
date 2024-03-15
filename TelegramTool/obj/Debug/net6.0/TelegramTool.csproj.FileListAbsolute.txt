@@ -11,3 +11,6 @@ D:\RiderProjects\RailwayManagerBot\TelegramTool\obj\Debug\net6.0\TelegramTool.dl
 D:\RiderProjects\RailwayManagerBot\TelegramTool\obj\Debug\net6.0\refint\TelegramTool.dll
 D:\RiderProjects\RailwayManagerBot\TelegramTool\obj\Debug\net6.0\TelegramTool.pdb
 D:\RiderProjects\RailwayManagerBot\TelegramTool\obj\Debug\net6.0\ref\TelegramTool.dll
+D:\RiderProjects\RailwayManagerBot\TelegramTool\bin\Debug\net6.0\Tools.dll
+D:\RiderProjects\RailwayManagerBot\TelegramTool\bin\Debug\net6.0\Tools.pdb
+D:\RiderProjects\RailwayManagerBot\TelegramTool\obj\Debug\net6.0\TelegramTool.csproj.CopyComplete

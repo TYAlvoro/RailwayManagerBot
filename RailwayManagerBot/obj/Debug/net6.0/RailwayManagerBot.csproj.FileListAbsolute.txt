@@ -19,3 +19,5 @@ D:\RiderProjects\RailwayManagerBot\RailwayManagerBot\obj\Debug\net6.0\RailwayMan
 D:\RiderProjects\RailwayManagerBot\RailwayManagerBot\obj\Debug\net6.0\ref\RailwayManagerBot.dll
 D:\RiderProjects\RailwayManagerBot\RailwayManagerBot\bin\Debug\net6.0\TelegramTool.dll
 D:\RiderProjects\RailwayManagerBot\RailwayManagerBot\bin\Debug\net6.0\TelegramTool.pdb
+D:\RiderProjects\RailwayManagerBot\RailwayManagerBot\bin\Debug\net6.0\Tools.dll
+D:\RiderProjects\RailwayManagerBot\RailwayManagerBot\bin\Debug\net6.0\Tools.pdb

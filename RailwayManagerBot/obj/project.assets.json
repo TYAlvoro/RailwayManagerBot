@@ -35,13 +35,27 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
-          "Telegram.Bot": "20.0.0-alpha.1"
+          "Telegram.Bot": "20.0.0-alpha.1",
+          "Tools": "1.0.0"
         },
         "compile": {
           "bin/placeholder/TelegramTool.dll": {}
         },
         "runtime": {
           "bin/placeholder/TelegramTool.dll": {}
+        }
+      },
+      "Tools/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Telegram.Bot": "20.0.0-alpha.1"
+        },
+        "compile": {
+          "bin/placeholder/Tools.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Tools.dll": {}
         }
       }
     }
@@ -96,6 +110,11 @@
       "type": "project",
       "path": "../TelegramTool/TelegramTool.csproj",
       "msbuildProject": "../TelegramTool/TelegramTool.csproj"
+    },
+    "Tools/1.0.0": {
+      "type": "project",
+      "path": "../Tools/Tools.csproj",
+      "msbuildProject": "../Tools/Tools.csproj"
     }
   },
   "projectFileDependencyGroups": {

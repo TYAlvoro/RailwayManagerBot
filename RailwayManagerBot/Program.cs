@@ -11,6 +11,7 @@ internal static class Program
 {
     private static void Main()
     {
-        TelegramManager.StartBot();
+        TelegramManager telegramManager = new TelegramManager();
+        telegramManager.StartBot();
     }
 }

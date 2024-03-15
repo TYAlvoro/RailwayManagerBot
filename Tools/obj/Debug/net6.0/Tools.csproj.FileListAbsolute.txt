@@ -1,0 +1,13 @@
+D:\RiderProjects\RailwayManagerBot\Tools\bin\Debug\net6.0\Tools.deps.json
+D:\RiderProjects\RailwayManagerBot\Tools\bin\Debug\net6.0\Tools.dll
+D:\RiderProjects\RailwayManagerBot\Tools\bin\Debug\net6.0\Tools.pdb
+D:\RiderProjects\RailwayManagerBot\Tools\obj\Debug\net6.0\Tools.csproj.AssemblyReference.cache
+D:\RiderProjects\RailwayManagerBot\Tools\obj\Debug\net6.0\Tools.GeneratedMSBuildEditorConfig.editorconfig
+D:\RiderProjects\RailwayManagerBot\Tools\obj\Debug\net6.0\Tools.AssemblyInfoInputs.cache
+D:\RiderProjects\RailwayManagerBot\Tools\obj\Debug\net6.0\Tools.AssemblyInfo.cs
+D:\RiderProjects\RailwayManagerBot\Tools\obj\Debug\net6.0\Tools.csproj.CoreCompileInputs.cache
+D:\RiderProjects\RailwayManagerBot\Tools\obj\Debug\net6.0\Tools.sourcelink.json
+D:\RiderProjects\RailwayManagerBot\Tools\obj\Debug\net6.0\Tools.dll
+D:\RiderProjects\RailwayManagerBot\Tools\obj\Debug\net6.0\refint\Tools.dll
+D:\RiderProjects\RailwayManagerBot\Tools\obj\Debug\net6.0\Tools.pdb
+D:\RiderProjects\RailwayManagerBot\Tools\obj\Debug\net6.0\ref\Tools.dll
