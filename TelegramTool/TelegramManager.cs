@@ -83,6 +83,7 @@ public class TelegramManager
         }
         else
         {
+            await typewriter.TypeMessageByWords(client, chatId, cancellationToken, $"You said: {messageText}");
             await typewriter.TypeMessageBySymbols(client, chatId, cancellationToken, $"You said: {messageText}");
         }
     }
