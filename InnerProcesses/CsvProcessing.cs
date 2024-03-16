@@ -37,10 +37,9 @@ public class CsvProcessing
         catch (CsvHelperException ex)
         {
             Typewriter typewriter = new Typewriter();
-            string message =
+            await typewriter.TypeMessageByWords(client, chatId, cancellationToken, 
                 $"Ошибка! В файле обнаружены некорректные данные!\nСтрока: {ex.Context.Parser.Row}\n" +
-                $"Текст строки (может отсутствовать в зависимости от ваших данных): {ex.Context.Parser.Record}";
-            await typewriter.TypeMessageByWords(client, chatId, cancellationToken, message);
+                $"Текст строки (может отсутствовать в зависимости от ваших данных): {ex.Context.Parser.RawRecord}");
         }
     } 
 }

@@ -36,12 +36,12 @@ public class Typewriter
     {
         Message sentmessage = await client.SendTextMessageAsync(
             chatId: chatId,
-            text: "...",
+            text: "Печатает...",
             cancellationToken: cancellationToken);
 
         string stringForType = String.Empty;
         
-        foreach (var symbol in messageText.Split())
+        foreach (var symbol in messageText.Trim().Split())
         {
             stringForType += symbol + " ";
             await Task.Delay(50, cancellationToken);

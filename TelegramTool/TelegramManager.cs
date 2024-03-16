@@ -63,6 +63,7 @@ public class TelegramManager
         }
     }
     
+    // TODO: человеческий вывод ошибок
     private Task HandlePollingErrorAsync(ITelegramBotClient client, Exception exception, CancellationToken cancellationToken)
     {
         string errorMessage = exception switch
@@ -116,11 +117,13 @@ public class TelegramManager
         var destinationFilePath =
             $"..{separator}..{separator}..{separator}..{separator}WorkingFiles{separator}input{separator}{fileName}";
         
-        await using var fileStream = File.Create(destinationFilePath);
-        await client.DownloadFileAsync(
-            filePath: filePath!,
-            destination: fileStream,
-            cancellationToken: cancellationToken);
+        await using (FileStream stream = File.Create(destinationFilePath))
+        {
+            await client.DownloadFileAsync(
+                filePath: filePath!,
+                destination: stream,
+                cancellationToken: cancellationToken);
+        }
 
         await ProcessFile(destinationFilePath, client, chatId, cancellationToken);
     }
@@ -129,6 +132,10 @@ public class TelegramManager
         CancellationToken cancellationToken)
     {
         CsvProcessing csvProcessing = new CsvProcessing();
-        await csvProcessing.Read(new StreamReader(filePath), client, chatId, cancellationToken);
+        using (StreamReader streamReader = new StreamReader(filePath))
+        {
+            
+            await csvProcessing.Read(streamReader, client, chatId, cancellationToken);
+        }
     }
 }
