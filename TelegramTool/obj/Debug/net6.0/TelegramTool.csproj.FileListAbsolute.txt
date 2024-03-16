@@ -14,3 +14,5 @@ D:\RiderProjects\RailwayManagerBot\TelegramTool\obj\Debug\net6.0\ref\TelegramToo
 D:\RiderProjects\RailwayManagerBot\TelegramTool\bin\Debug\net6.0\Tools.dll
 D:\RiderProjects\RailwayManagerBot\TelegramTool\bin\Debug\net6.0\Tools.pdb
 D:\RiderProjects\RailwayManagerBot\TelegramTool\obj\Debug\net6.0\TelegramTool.csproj.CopyComplete
+D:\RiderProjects\RailwayManagerBot\TelegramTool\bin\Debug\net6.0\InnerProcesses.dll
+D:\RiderProjects\RailwayManagerBot\TelegramTool\bin\Debug\net6.0\InnerProcesses.pdb

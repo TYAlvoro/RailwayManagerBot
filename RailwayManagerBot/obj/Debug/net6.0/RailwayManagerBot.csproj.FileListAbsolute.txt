@@ -21,3 +21,6 @@ D:\RiderProjects\RailwayManagerBot\RailwayManagerBot\bin\Debug\net6.0\TelegramTo
 D:\RiderProjects\RailwayManagerBot\RailwayManagerBot\bin\Debug\net6.0\TelegramTool.pdb
 D:\RiderProjects\RailwayManagerBot\RailwayManagerBot\bin\Debug\net6.0\Tools.dll
 D:\RiderProjects\RailwayManagerBot\RailwayManagerBot\bin\Debug\net6.0\Tools.pdb
+D:\RiderProjects\RailwayManagerBot\RailwayManagerBot\bin\Debug\net6.0\CsvHelper.dll
+D:\RiderProjects\RailwayManagerBot\RailwayManagerBot\bin\Debug\net6.0\InnerProcesses.dll
+D:\RiderProjects\RailwayManagerBot\RailwayManagerBot\bin\Debug\net6.0\InnerProcesses.pdb

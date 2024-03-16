@@ -1,0 +1,16 @@
+D:\RiderProjects\RailwayManagerBot\InnerProcesses\bin\Debug\net6.0\InnerProcesses.deps.json
+D:\RiderProjects\RailwayManagerBot\InnerProcesses\bin\Debug\net6.0\InnerProcesses.dll
+D:\RiderProjects\RailwayManagerBot\InnerProcesses\bin\Debug\net6.0\InnerProcesses.pdb
+D:\RiderProjects\RailwayManagerBot\InnerProcesses\obj\Debug\net6.0\InnerProcesses.GeneratedMSBuildEditorConfig.editorconfig
+D:\RiderProjects\RailwayManagerBot\InnerProcesses\obj\Debug\net6.0\InnerProcesses.AssemblyInfoInputs.cache
+D:\RiderProjects\RailwayManagerBot\InnerProcesses\obj\Debug\net6.0\InnerProcesses.AssemblyInfo.cs
+D:\RiderProjects\RailwayManagerBot\InnerProcesses\obj\Debug\net6.0\InnerProcesses.csproj.CoreCompileInputs.cache
+D:\RiderProjects\RailwayManagerBot\InnerProcesses\obj\Debug\net6.0\InnerProcesses.sourcelink.json
+D:\RiderProjects\RailwayManagerBot\InnerProcesses\obj\Debug\net6.0\InnerProcesses.dll
+D:\RiderProjects\RailwayManagerBot\InnerProcesses\obj\Debug\net6.0\refint\InnerProcesses.dll
+D:\RiderProjects\RailwayManagerBot\InnerProcesses\obj\Debug\net6.0\InnerProcesses.pdb
+D:\RiderProjects\RailwayManagerBot\InnerProcesses\obj\Debug\net6.0\ref\InnerProcesses.dll
+D:\RiderProjects\RailwayManagerBot\InnerProcesses\obj\Debug\net6.0\InnerProcesses.csproj.AssemblyReference.cache
+D:\RiderProjects\RailwayManagerBot\InnerProcesses\bin\Debug\net6.0\Tools.dll
+D:\RiderProjects\RailwayManagerBot\InnerProcesses\bin\Debug\net6.0\Tools.pdb
+D:\RiderProjects\RailwayManagerBot\InnerProcesses\obj\Debug\net6.0\InnerProcesses.csproj.CopyComplete

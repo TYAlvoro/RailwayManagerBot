@@ -1,4 +1,5 @@
-﻿using Telegram.Bot;
+﻿using InnerProcesses;
+using Telegram.Bot;
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
@@ -121,11 +122,13 @@ public class TelegramManager
             destination: fileStream,
             cancellationToken: cancellationToken);
 
-        await ProcessFile();
+        await ProcessFile(destinationFilePath, client, chatId, cancellationToken);
     }
 
-    private async Task ProcessFile()
+    private async Task ProcessFile(string filePath, ITelegramBotClient client, long chatId, 
+        CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        CsvProcessing csvProcessing = new CsvProcessing();
+        await csvProcessing.Read(new StreamReader(filePath), client, chatId, cancellationToken);
     }
 }

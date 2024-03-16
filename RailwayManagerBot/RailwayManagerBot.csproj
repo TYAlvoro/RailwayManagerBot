@@ -8,10 +8,12 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="CsvHelper" Version="31.0.2" />
       <PackageReference Include="Telegram.Bot" Version="20.0.0-alpha.1" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\InnerProcesses\InnerProcesses.csproj" />
       <ProjectReference Include="..\TelegramTool\TelegramTool.csproj" />
     </ItemGroup>
 

@@ -11,6 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\InnerProcesses\InnerProcesses.csproj" />
       <ProjectReference Include="..\Tools\Tools.csproj" />
     </ItemGroup>
 
