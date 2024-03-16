@@ -1,4 +1,5 @@
-﻿using InnerProcesses;
+﻿using System.Net.Security;
+using InnerProcesses;
 using Telegram.Bot;
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Polling;
@@ -131,11 +132,24 @@ public class TelegramManager
     private async Task ProcessFile(string filePath, ITelegramBotClient client, long chatId, 
         CancellationToken cancellationToken)
     {
-        CsvProcessing csvProcessing = new CsvProcessing();
-        using (StreamReader streamReader = new StreamReader(filePath))
+        var csvProcessing = new CsvProcessing();
+
+        using var streamReader = new StreamReader(filePath);
+        MetroStation[] stations = await csvProcessing.Read(streamReader, client, chatId, cancellationToken);
+
+        foreach (var station in stations)
         {
-            
-            await csvProcessing.Read(streamReader, client, chatId, cancellationToken);
+            Console.WriteLine(station.NameOfStation);
         }
+    }
+
+    private async Task UploadFile(FileStream stream, string fileName, ITelegramBotClient client, long chatId,
+        CancellationToken cancellationToken)
+    {
+        await using var streamWriter = new StreamWriter(stream);
+        await client.SendDocumentAsync(
+            chatId: chatId,
+            document: InputFile.FromStream(stream: stream, fileName: fileName),
+            caption: "Возвращаю обработанный файл!", cancellationToken: cancellationToken);
     }
 }
