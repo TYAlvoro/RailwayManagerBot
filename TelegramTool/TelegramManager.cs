@@ -11,13 +11,11 @@ namespace TelegramTool;
 
 public class TelegramManager
 {
-    private Typewriter _typewriter;
     private readonly TelegramBotClient _client;
     private const string Token = "7041448431:AAFHhgFzGwI0sSTt65toZt5za30Do0aOjpo";
 
     public TelegramManager()
     {
-        _typewriter = new Typewriter();
         _client = new TelegramBotClient(Token);
     }
 
@@ -78,15 +76,15 @@ public class TelegramManager
     {
         if (messageText == "/start")
         {
-            await client.SendStickerAsync(
-                chatId: chatId,
-                sticker: InputFile.FromFileId(
-                    "CAACAgIAAxkBAAELse9l8zHKpeU113KvTTNOj0t2XEfk_QACnxIAAgKvmUsyx0PpsZAfRDQE"),
-                cancellationToken: cancellationToken);
+            await HandleCommandStart(client, chatId, cancellationToken);
         }
-        else
+        else if (messageText == "/help")
         {
-            await _typewriter.TypeMessageByWords(client, chatId, cancellationToken, $"You said: {messageText}");
+            await HandleCommandHelp(client, chatId, cancellationToken);
+        }
+        else if (messageText == "/work")
+        {
+            await HandleCommandWork(client, chatId, cancellationToken);
         }
     }
 
@@ -95,13 +93,19 @@ public class TelegramManager
     {
         var fileInfo = await client.GetFileAsync(document.FileId, cancellationToken);
         var filePath = fileInfo.FilePath;
-        
         var fileExtension = Path.GetExtension(filePath);
 
         if (fileExtension != ".csv" && fileExtension != ".json")
         {
-            await _typewriter.TypeMessageByWords(client, chatId, cancellationToken,
-                "Поддерживаемые форматы: csv, json.");
+            await client.SendStickerAsync(
+                chatId: chatId,
+                sticker: InputFile.FromFileId(
+                    "CAACAgIAAxkBAAELu5Nl9y55vHR5iso2tQtEkchEZ_jbFgAC_ysAAu8HyUi2RnsvXMZDTzQE"),
+                cancellationToken: cancellationToken);
+            await client.SendTextMessageAsync(
+                chatId: chatId,
+                text: "Отправлять нужно только файлы в формате json или csv!\nС другими я не знаю, что делать.",
+                cancellationToken: cancellationToken);
             return;
         }
         
@@ -149,5 +153,49 @@ public class TelegramManager
             chatId: chatId,
             document: InputFile.FromStream(stream: stream, fileName: fileName),
             caption: "Возвращаю обработанный файл!", cancellationToken: cancellationToken);
+    }
+
+    private async Task HandleCommandStart(ITelegramBotClient client, long chatId, CancellationToken cancellationToken)
+    {
+        await client.SendStickerAsync(
+            chatId: chatId,
+            sticker: InputFile.FromFileId(
+                "CAACAgIAAxkBAAELu4dl9ydA5XUPTdejX8u7tto5BRNM9QACWQ8AAus7mUsgSBdHQAcd8jQE"),
+            cancellationToken: cancellationToken);
+        await client.SendTextMessageAsync(
+            chatId: chatId,
+            text: "Привет!\nЯ помогу тебе удобно просматривать информацию о станциях метро.\n" +
+                  "Просто жмыкай на /help и поехали!",
+            cancellationToken: cancellationToken);
+    }
+    
+    private async Task HandleCommandHelp(ITelegramBotClient client, long chatId, CancellationToken cancellationToken)
+    {
+        await client.SendStickerAsync(
+            chatId: chatId,
+            sticker: InputFile.FromFileId(
+                "CAACAgIAAxkBAAELu4tl9yplzMzTeavndUed4OdVfcubSgACRBAAAiK3mEvG2WKIDbGYUzQE"),
+            cancellationToken: cancellationToken);
+        await client.SendTextMessageAsync(
+            chatId: chatId,
+            text: "Да ладно, шучу.\nДля тебя я всегда свободен!\n\nНа самом деле здесь все просто: " +
+                  "пишешь /work и выполняешь дальнейшие команды.",
+            cancellationToken: cancellationToken);
+    }
+    
+    private async Task HandleCommandWork(ITelegramBotClient client, long chatId, CancellationToken cancellationToken)
+    {
+        await client.SendStickerAsync(
+            chatId: chatId,
+            sticker: InputFile.FromFileId(
+                "CAACAgIAAxkBAAELu5Fl9yzsv_SY7qB2cV4Pyqya9Zkr9QACZTAAAs7woEicWchhTvQKJDQE"),
+            cancellationToken: cancellationToken);
+        await client.SendTextMessageAsync(
+            chatId: chatId,
+            text: "It`s work time!\nТвоя задача проста - отправляешь мне файлик в формате json или csv," +
+                  " выбираешь в меню, что я должен с ним сделать, а я возвращаю тебе обработанную версию.",
+            cancellationToken: cancellationToken);
+        
+        
     }
 }
