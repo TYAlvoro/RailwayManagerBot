@@ -18,15 +18,10 @@ public class TelegramManager
     public TelegramManager()
     {
         _typewriter = new Typewriter();
-        _client = new(Token);
+        _client = new TelegramBotClient(Token);
     }
-    
+
     public void StartBot()
-    {
-        InitBot();
-    }
-    
-    private void InitBot()
     {
         using CancellationTokenSource cts = new();
         ReceiverOptions receiverOptions = new()
@@ -141,23 +136,8 @@ public class TelegramManager
         else
         {
             var jsonProcessing = new JsonProcessing();
-            using (var streamReader = new StreamReader(filePath))
-            {
-                stations = await jsonProcessing.Read(streamReader, client, chatId, cancellationToken);
-            }
-
-            string fileName = Path.GetFileName(filePath);
-            
-            await UploadFile(await jsonProcessing.Write(stations, fileName), Path.GetFileName(fileName), 
-                client, chatId, cancellationToken);
-        }
-        
-        // TODO: проверять, что станции есть.
-        
-        
-        foreach (var station in stations)
-        {
-            Console.WriteLine(station.NameOfStation);
+            using var streamReader = new StreamReader(filePath);
+            stations = await jsonProcessing.Read(streamReader, client, chatId, cancellationToken);
         }
     }
 
