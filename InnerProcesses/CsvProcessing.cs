@@ -45,6 +45,7 @@ public class CsvProcessing
 
     public async Task<FileStream> Write(MetroStation[] stations, string fileName)
     {
+        // TODO: Здесь нужно еще русский header добавлять.
         var separator = Path.DirectorySeparatorChar;
         var filePath =
             $"..{separator}..{separator}..{separator}..{separator}WorkingFiles{separator}output{separator}{fileName}";
@@ -55,9 +56,9 @@ public class CsvProcessing
             HasHeaderRecord = true
         };
 
-        await using (var writer = new StreamWriter(filePath))
+        await using (var streamWriter = new StreamWriter(filePath))
         {
-            await using (var csv = new CsvWriter(writer, config))
+            await using (var csv = new CsvWriter(streamWriter, config))
             {
                 await csv.WriteRecordsAsync(stations.ToList());
             }

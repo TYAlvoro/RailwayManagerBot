@@ -1,5 +1,4 @@
-﻿using System.Net.Security;
-using InnerProcesses;
+﻿using InnerProcesses;
 using Telegram.Bot;
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Polling;
@@ -132,11 +131,30 @@ public class TelegramManager
     private async Task ProcessFile(string filePath, ITelegramBotClient client, long chatId, 
         CancellationToken cancellationToken)
     {
-        var csvProcessing = new CsvProcessing();
+        MetroStation[] stations;
+        if (Path.GetExtension(filePath) == ".csv")
+        {
+            var csvProcessing = new CsvProcessing();
+            using var streamReader = new StreamReader(filePath);
+            stations = await csvProcessing.Read(streamReader, client, chatId, cancellationToken);
+        }
+        else
+        {
+            var jsonProcessing = new JsonProcessing();
+            using (var streamReader = new StreamReader(filePath))
+            {
+                stations = await jsonProcessing.Read(streamReader, client, chatId, cancellationToken);
+            }
 
-        using var streamReader = new StreamReader(filePath);
-        MetroStation[] stations = await csvProcessing.Read(streamReader, client, chatId, cancellationToken);
-
+            string fileName = Path.GetFileName(filePath);
+            
+            await UploadFile(await jsonProcessing.Write(stations, fileName), Path.GetFileName(fileName), 
+                client, chatId, cancellationToken);
+        }
+        
+        // TODO: проверять, что станции есть.
+        
+        
         foreach (var station in stations)
         {
             Console.WriteLine(station.NameOfStation);
