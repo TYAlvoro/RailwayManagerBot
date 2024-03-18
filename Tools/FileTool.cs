@@ -42,12 +42,13 @@ public class FileTool
     public void CreateFile()
     {
         char separator = Path.DirectorySeparatorChar;
-        string systemFiles =
+        string systemFile =
             $"..{separator}..{separator}..{separator}..{separator}WorkingFiles{separator}system{separator}users.txt";
 
         try
         {
-            using (var _ = File.Create(systemFiles))
+            if (File.Exists(systemFile)) return;
+            using (var _ = File.Create(systemFile))
             {
                 Console.WriteLine("В папке system создан файл users.txt для хранения состояний.");
             }

@@ -41,17 +41,20 @@ public class TelegramManager
     
     private async Task HandleUpdateAsync(ITelegramBotClient client, Update update, CancellationToken cancellationToken)
     {
+        State state = new State();
+        
         if (update.Message is { } message)
         {
+            long chatId = message.Chat.Id;
+            state.AddUser(chatId);
+            
             if (message.Text is { } messageText)
             {
-                long chatId = message.Chat.Id;
                 await HandleUserMessage(client, chatId, cancellationToken, messageText);
             }
 
             else if (message.Document is { } messageDocument)
             {
-                long chatId = message.Chat.Id;
                 await HandleUserDocument(client, chatId, cancellationToken, messageDocument);
             }
         }
@@ -122,7 +125,7 @@ public class TelegramManager
         var destinationFilePath =
             $"..{separator}..{separator}..{separator}..{separator}WorkingFiles{separator}input{separator}{fileName}";
         
-        await using (FileStream stream = File.Create(destinationFilePath))
+        await using (var stream = File.Create(destinationFilePath))
         {
             await client.DownloadFileAsync(
                 filePath: filePath!,
@@ -131,6 +134,10 @@ public class TelegramManager
         }
 
         await SayFileDownloaded(client, chatId, cancellationToken);
+        
+        State state = new State();
+        state.AddFileToUser(chatId, destinationFilePath);
+        
         await ProcessFile(destinationFilePath, client, chatId, cancellationToken);
     }
 
