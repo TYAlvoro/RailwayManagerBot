@@ -8,6 +8,7 @@ public class FileTool
         string mainDirectory = $"..{separator}..{separator}..{separator}..{separator}WorkingFiles";
         string inputDirectory = $"..{separator}..{separator}..{separator}..{separator}WorkingFiles{separator}input";
         string outputDirectory = $"..{separator}..{separator}..{separator}..{separator}WorkingFiles{separator}output";
+        string systemFiles = $"..{separator}..{separator}..{separator}..{separator}WorkingFiles{separator}system";
 
         try
         {
@@ -26,10 +27,34 @@ public class FileTool
                 Directory.CreateDirectory(outputDirectory);
                 Console.WriteLine("В папке WorkingFiles создана папка output для хранения выходных файлов.");
             }
+            if (!Directory.Exists(systemFiles))
+            {
+                Directory.CreateDirectory(systemFiles);
+                Console.WriteLine("В папке WorkingFiles создана папка system для хранения файлов программы.");
+            }
         }
         catch (UnauthorizedAccessException ex)
         {
             Console.WriteLine($"Программа не имеет разрешения на создание нужной для ее корректной работы папки!: {ex}");
+        }
+    }
+
+    public void CreateFile()
+    {
+        char separator = Path.DirectorySeparatorChar;
+        string systemFiles =
+            $"..{separator}..{separator}..{separator}..{separator}WorkingFiles{separator}system{separator}users.txt";
+
+        try
+        {
+            using (var _ = File.Create(systemFiles))
+            {
+                Console.WriteLine("В папке system создан файл users.txt для хранения состояний.");
+            }
+        }
+        catch (IOException ex)
+        {
+            Console.WriteLine($"Программа не имеет разрешения на создание нужного для ее корректной работы файла!: {ex}");
         }
     }
 }

@@ -4,6 +4,7 @@ using Telegram.Bot.Exceptions;
 using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
+using Telegram.Bot.Types.ReplyMarkups;
 using Tools;
 using File = System.IO.File;
 
@@ -33,26 +34,31 @@ public class TelegramManager
             receiverOptions: receiverOptions,
             cancellationToken: cts.Token
         );
-
+            
         Console.ReadLine();
         cts.Cancel();
     }
     
     private async Task HandleUpdateAsync(ITelegramBotClient client, Update update, CancellationToken cancellationToken)
     {
-        if (update.Message is not { } message)
-            return;
-
-        if (message.Text is { } messageText)
+        if (update.Message is { } message)
         {
-            long chatId = message.Chat.Id;
-            await HandleUserMessage(client, chatId, cancellationToken, messageText);
+            if (message.Text is { } messageText)
+            {
+                long chatId = message.Chat.Id;
+                await HandleUserMessage(client, chatId, cancellationToken, messageText);
+            }
+
+            else if (message.Document is { } messageDocument)
+            {
+                long chatId = message.Chat.Id;
+                await HandleUserDocument(client, chatId, cancellationToken, messageDocument);
+            }
         }
-
-        else if (message.Document is { } messageDocument)
+        
+        else if (update.CallbackQuery is { } callbackQuery)
         {
-            long chatId = message.Chat.Id;
-            await HandleUserDocument(client, chatId, cancellationToken, messageDocument);
+            Console.WriteLine(callbackQuery.Data);
         }
     }
     
@@ -124,6 +130,7 @@ public class TelegramManager
                 cancellationToken: cancellationToken);
         }
 
+        await SayFileDownloaded(client, chatId, cancellationToken);
         await ProcessFile(destinationFilePath, client, chatId, cancellationToken);
     }
 
@@ -195,7 +202,53 @@ public class TelegramManager
             text: "It`s work time!\nТвоя задача проста - отправляешь мне файлик в формате json или csv," +
                   " выбираешь в меню, что я должен с ним сделать, а я возвращаю тебе обработанную версию.",
             cancellationToken: cancellationToken);
+    }
+    private async Task SayFileDownloaded(ITelegramBotClient client, long chatId, CancellationToken cancellationToken)
+    {
+        await client.SendStickerAsync(
+            chatId: chatId,
+            sticker: InputFile.FromFileId(
+                "CAACAgIAAxkBAAELu5dl9y-bmYP3Zg5lLyz-GpiBP6-fOAACERgAAv564UuysbzruCnEmzQE"),
+            cancellationToken: cancellationToken);
+
+        InlineKeyboardMarkup sortKeyboard = new(new[]
+        {
+            new[]
+            {
+                InlineKeyboardButton.WithCallbackData(text: "По году.", callbackData: "sortyear"),
+                InlineKeyboardButton.WithCallbackData(text: "По названию.", callbackData: "sortname"),
+            }
+        });
+
+        InlineKeyboardMarkup filterKeyboard = new(new[]
+        {
+            new[]
+            {
+                InlineKeyboardButton.WithCallbackData(text: "По названию станции.",
+                    callbackData: "filtername"),
+                InlineKeyboardButton.WithCallbackData(text: "По названию линии.",
+                    callbackData: "filterline")
+            },
+            new[]
+            {
+                InlineKeyboardButton.WithCallbackData(text: "По месяцу и названию.",
+                    callbackData: "filterboth")
+            }
+        });
         
-        
+        await client.SendTextMessageAsync(
+            chatId: chatId,
+            text: "Файл успешно загружен в систему!\nТеперь выбери, что я должен с ним сделать.",
+            cancellationToken: cancellationToken);
+        await client.SendTextMessageAsync(
+            chatId: chatId,
+            text: "Отсортировать:",
+            replyMarkup: sortKeyboard,
+            cancellationToken: cancellationToken);
+        await client.SendTextMessageAsync(
+            chatId: chatId,
+            text: "Отфильтровать:",
+            replyMarkup: filterKeyboard,
+            cancellationToken: cancellationToken);
     }
 }

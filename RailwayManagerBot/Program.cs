@@ -11,6 +11,9 @@ internal static class Program
 {
     private static void Main()
     {
+        FileTool fileTool = new FileTool();
+        fileTool.CreateDirectories();
+        fileTool.CreateFile();
          TelegramManager telegramManager = new TelegramManager();
          telegramManager.StartBot();
     }
