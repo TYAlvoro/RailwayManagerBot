@@ -61,7 +61,14 @@ public class TelegramManager
         
         else if (update.CallbackQuery is { } callbackQuery)
         {
-            Console.WriteLine(callbackQuery.Data);
+            long chatId = callbackQuery.Message!.Chat.Id;
+            MetroStation[] stations =
+                await ProcessFile(state.PathToFile(chatId), client, chatId, cancellationToken);
+            
+            if (callbackQuery.Data == "sortyear")
+            {
+                await HandleCallbackSortYear(client, chatId, cancellationToken, stations, state);
+            }
         }
     }
     
@@ -141,7 +148,7 @@ public class TelegramManager
         await ProcessFile(state.PathToFile(chatId), client, chatId, cancellationToken);
     }
 
-    private async Task ProcessFile(string filePath, ITelegramBotClient client, long chatId, 
+    private async Task<MetroStation[]> ProcessFile(string filePath, ITelegramBotClient client, long chatId, 
         CancellationToken cancellationToken)
     {
         MetroStation[] stations;
@@ -157,6 +164,8 @@ public class TelegramManager
             using var streamReader = new StreamReader(filePath);
             stations = await jsonProcessing.Read(streamReader, client, chatId, cancellationToken);
         }
+
+        return stations;
     }
 
     private async Task UploadFile(FileStream stream, ITelegramBotClient client, long chatId,
@@ -166,7 +175,7 @@ public class TelegramManager
         var state = new State();
         await client.SendDocumentAsync(
             chatId: chatId,
-            document: InputFile.FromStream(stream: stream, fileName: state.PathToFile(chatId)),
+            document: InputFile.FromStream(stream: stream, fileName: Path.GetFileName(state.PathToFile(chatId))),
             caption: "Возвращаю обработанный файл!", cancellationToken: cancellationToken);
     }
 
@@ -211,6 +220,87 @@ public class TelegramManager
                   " выбираешь в меню, что я должен с ним сделать, а я возвращаю тебе обработанную версию.",
             cancellationToken: cancellationToken);
     }
+    
+    private async Task HandleCallbackSortYear(ITelegramBotClient client, long chatId, 
+        CancellationToken cancellationToken, MetroStation[] stations, State state)
+    {
+        DataTool dataTool = new DataTool();
+        FileStream stream;
+        stations = dataTool.SortByYear(stations);
+        string filePath = state.PathToFile(chatId);
+
+        if (Path.GetExtension(filePath) == ".csv")
+        {
+            CsvProcessing csvProcessing = new CsvProcessing(); 
+            stream = await csvProcessing.Write(stations, state.PathToFile(chatId));
+        }
+        else
+        {
+            JsonProcessing jsonProcessing = new JsonProcessing();
+            stream = await jsonProcessing.Write(stations, state.PathToFile(chatId));
+        }
+
+
+
+        await UploadFile(stream, client, chatId, cancellationToken);
+    }
+    
+    private async Task HandleCallbackSortName(ITelegramBotClient client, long chatId, CancellationToken cancellationToken)
+    {
+        await client.SendStickerAsync(
+            chatId: chatId,
+            sticker: InputFile.FromFileId(
+                "CAACAgIAAxkBAAELu5Fl9yzsv_SY7qB2cV4Pyqya9Zkr9QACZTAAAs7woEicWchhTvQKJDQE"),
+            cancellationToken: cancellationToken);
+        await client.SendTextMessageAsync(
+            chatId: chatId,
+            text: "It`s work time!\nТвоя задача проста - отправляешь мне файлик в формате json или csv," +
+                  " выбираешь в меню, что я должен с ним сделать, а я возвращаю тебе обработанную версию.",
+            cancellationToken: cancellationToken);
+    }
+    
+    private async Task HandleCallbackFilterName(ITelegramBotClient client, long chatId, CancellationToken cancellationToken)
+    {
+        await client.SendStickerAsync(
+            chatId: chatId,
+            sticker: InputFile.FromFileId(
+                "CAACAgIAAxkBAAELu5Fl9yzsv_SY7qB2cV4Pyqya9Zkr9QACZTAAAs7woEicWchhTvQKJDQE"),
+            cancellationToken: cancellationToken);
+        await client.SendTextMessageAsync(
+            chatId: chatId,
+            text: "It`s work time!\nТвоя задача проста - отправляешь мне файлик в формате json или csv," +
+                  " выбираешь в меню, что я должен с ним сделать, а я возвращаю тебе обработанную версию.",
+            cancellationToken: cancellationToken);
+    }
+    
+    private async Task HandleCallbackFilterLine(ITelegramBotClient client, long chatId, CancellationToken cancellationToken)
+    {
+        await client.SendStickerAsync(
+            chatId: chatId,
+            sticker: InputFile.FromFileId(
+                "CAACAgIAAxkBAAELu5Fl9yzsv_SY7qB2cV4Pyqya9Zkr9QACZTAAAs7woEicWchhTvQKJDQE"),
+            cancellationToken: cancellationToken);
+        await client.SendTextMessageAsync(
+            chatId: chatId,
+            text: "It`s work time!\nТвоя задача проста - отправляешь мне файлик в формате json или csv," +
+                  " выбираешь в меню, что я должен с ним сделать, а я возвращаю тебе обработанную версию.",
+            cancellationToken: cancellationToken);
+    }
+    
+    private async Task HandleCallbackFilterBoth(ITelegramBotClient client, long chatId, CancellationToken cancellationToken)
+    {
+        await client.SendStickerAsync(
+            chatId: chatId,
+            sticker: InputFile.FromFileId(
+                "CAACAgIAAxkBAAELu5Fl9yzsv_SY7qB2cV4Pyqya9Zkr9QACZTAAAs7woEicWchhTvQKJDQE"),
+            cancellationToken: cancellationToken);
+        await client.SendTextMessageAsync(
+            chatId: chatId,
+            text: "It`s work time!\nТвоя задача проста - отправляешь мне файлик в формате json или csv," +
+                  " выбираешь в меню, что я должен с ним сделать, а я возвращаю тебе обработанную версию.",
+            cancellationToken: cancellationToken);
+    }
+    
     private async Task SayFileDownloaded(ITelegramBotClient client, long chatId, CancellationToken cancellationToken)
     {
         await client.SendStickerAsync(

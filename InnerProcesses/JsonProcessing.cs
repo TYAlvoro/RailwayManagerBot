@@ -38,16 +38,12 @@ public class JsonProcessing
 
     public async Task<FileStream> Write(MetroStation[] stations, string fileName)
     {
-        var separator = Path.DirectorySeparatorChar;
-        var filePath =
-            $"..{separator}..{separator}..{separator}..{separator}WorkingFiles{separator}output{separator}{fileName}";
-
-        await using (var streamWriter = new StreamWriter(filePath))
+        await using (var streamWriter = new StreamWriter(fileName))
         {
             var jsonString = JsonConvert.SerializeObject(stations, Formatting.Indented);
             await streamWriter.WriteAsync(jsonString);
         }
         
-        return new FileStream(filePath, FileMode.Open);
+        return new FileStream(fileName, FileMode.Open);
     }
 }
