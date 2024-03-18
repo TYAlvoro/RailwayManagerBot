@@ -22,6 +22,10 @@ public class State
         {
             lines.Add($"{chatId}: pass: false");
         }
+        else
+        {
+            
+        }
 
         using (var streamWriter = new StreamWriter(_systemFile))
         {
@@ -59,7 +63,7 @@ public class State
         }
     }
 
-    public void AddStateToUser(long chatId, string filePath, string state)
+    public void AddStateToUser(long chatId, string state)
     {
         var lines = new List<string>();
         
@@ -87,7 +91,7 @@ public class State
         }
     }
     
-    public void AddValuesToUser(long chatId, string filePath, string firstValue, string secondValue)
+    public void AddValuesToUser(long chatId, string firstValue, string secondValue)
     {
         var lines = new List<string>();
         
@@ -136,5 +140,27 @@ public class State
         }
 
         return filePath!;
+    }
+    
+    public string UserState(long chatId)
+    {
+        var lines = new List<string>();
+        
+        using (var streamReader = new StreamReader(_systemFile))
+        {
+            while (streamReader.ReadLine() is { } line)
+            {
+                lines.Add(line);
+            }
+        }
+
+        var state = String.Empty;
+        
+        foreach (var line in lines.Where(line => line.Contains(chatId.ToString())))
+        {
+            state = line.Split(": ")[2];
+        }
+
+        return state!;
     }
 }

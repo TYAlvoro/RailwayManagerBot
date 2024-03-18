@@ -1,2 +1,2 @@
-1410191952: ..\..\..\..\WorkingFiles\input\station_1410191952.json
+1410191952: ..\..\..\..\WorkingFiles\input\station_1410191952.csv: name
 541802268: pass

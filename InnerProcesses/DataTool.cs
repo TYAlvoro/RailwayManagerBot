@@ -7,6 +7,10 @@ public class DataTool
         switch (filterField)
         {
             case "name":
+                foreach (var station in stations)
+                {
+                    Console.WriteLine(station.NameOfStation);
+                }
                 return stations.Where(station => station.NameOfStation == filterValue).ToArray();
             case "line":
                 return stations.Where(station => station.Line == filterValue).ToArray();
