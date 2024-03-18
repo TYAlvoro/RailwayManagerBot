@@ -239,24 +239,30 @@ public class TelegramManager
             JsonProcessing jsonProcessing = new JsonProcessing();
             stream = await jsonProcessing.Write(stations, state.PathToFile(chatId));
         }
-
-
-
+        
         await UploadFile(stream, client, chatId, cancellationToken);
     }
     
-    private async Task HandleCallbackSortName(ITelegramBotClient client, long chatId, CancellationToken cancellationToken)
+    private async Task HandleCallbackSortName(ITelegramBotClient client, long chatId, 
+        CancellationToken cancellationToken, MetroStation[] stations, State state)
     {
-        await client.SendStickerAsync(
-            chatId: chatId,
-            sticker: InputFile.FromFileId(
-                "CAACAgIAAxkBAAELu5Fl9yzsv_SY7qB2cV4Pyqya9Zkr9QACZTAAAs7woEicWchhTvQKJDQE"),
-            cancellationToken: cancellationToken);
-        await client.SendTextMessageAsync(
-            chatId: chatId,
-            text: "It`s work time!\nТвоя задача проста - отправляешь мне файлик в формате json или csv," +
-                  " выбираешь в меню, что я должен с ним сделать, а я возвращаю тебе обработанную версию.",
-            cancellationToken: cancellationToken);
+        DataTool dataTool = new DataTool();
+        FileStream stream;
+        stations = dataTool.SortByName(stations);
+        string filePath = state.PathToFile(chatId);
+
+        if (Path.GetExtension(filePath) == ".csv")
+        {
+            CsvProcessing csvProcessing = new CsvProcessing(); 
+            stream = await csvProcessing.Write(stations, state.PathToFile(chatId));
+        }
+        else
+        {
+            JsonProcessing jsonProcessing = new JsonProcessing();
+            stream = await jsonProcessing.Write(stations, state.PathToFile(chatId));
+        }
+        
+        await UploadFile(stream, client, chatId, cancellationToken);
     }
     
     private async Task HandleCallbackFilterName(ITelegramBotClient client, long chatId, CancellationToken cancellationToken)
