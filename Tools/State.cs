@@ -58,4 +58,26 @@ public class State
             }
         }
     }
+
+    public string PathToFile(long chatId)
+    {
+        var lines = new List<string>();
+        
+        using (var streamReader = new StreamReader(_systemFile))
+        {
+            while (streamReader.ReadLine() is { } line)
+            {
+                lines.Add(line);
+            }
+        }
+
+        var filePath = String.Empty;
+        
+        foreach (var line in lines.Where(line => line.Contains(chatId.ToString())))
+        {
+            filePath = line.Split(": ")[1];
+        }
+
+        return filePath!;
+    }
 }

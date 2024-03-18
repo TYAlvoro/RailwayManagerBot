@@ -138,7 +138,7 @@ public class TelegramManager
         State state = new State();
         state.AddFileToUser(chatId, destinationFilePath);
         
-        await ProcessFile(destinationFilePath, client, chatId, cancellationToken);
+        await ProcessFile(state.PathToFile(chatId), client, chatId, cancellationToken);
     }
 
     private async Task ProcessFile(string filePath, ITelegramBotClient client, long chatId, 
@@ -159,13 +159,14 @@ public class TelegramManager
         }
     }
 
-    private async Task UploadFile(FileStream stream, string fileName, ITelegramBotClient client, long chatId,
+    private async Task UploadFile(FileStream stream, ITelegramBotClient client, long chatId,
         CancellationToken cancellationToken)
     {
         await using var streamWriter = new StreamWriter(stream);
+        var state = new State();
         await client.SendDocumentAsync(
             chatId: chatId,
-            document: InputFile.FromStream(stream: stream, fileName: fileName),
+            document: InputFile.FromStream(stream: stream, fileName: state.PathToFile(chatId)),
             caption: "Возвращаю обработанный файл!", cancellationToken: cancellationToken);
     }
 
