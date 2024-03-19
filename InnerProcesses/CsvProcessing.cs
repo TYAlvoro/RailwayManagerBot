@@ -47,20 +47,24 @@ public class CsvProcessing
     {
         char separator = Path.DirectorySeparatorChar;
         string filePath =
-            $"..{separator}..{separator}..{separator}..{separator}WorkingFiles{separator}output{Path.GetFileName(fileName)}";
+            $"..{separator}..{separator}..{separator}..{separator}WorkingFiles{separator}output{separator}{Path.GetFileName(fileName)}";
         
         var config = new CsvConfiguration(CultureInfo.InvariantCulture)
         {
             Delimiter = ";",
-            HasHeaderRecord = true
+            HasHeaderRecord = false
         };
 
         await using (var streamWriter = new StreamWriter(filePath))
         {
             await using (var csv = new CsvWriter(streamWriter, config))
             {
-                streamWriter.WriteLine("ID;NameOfStation;Line;Longitude_WGS84;Latitude_WGS84;AdmArea;District;Year;Month;global_id;geodata_center;geoarea;");
-                streamWriter.WriteLine("\u2116 п/п;Станция метрополитена;Линия;Долгота в WGS-84;Широта в WGS-84;Административный округ;Район;Год;Месяц;global_id;geodata_center;geoarea;");
+                streamWriter.WriteLine("\"ID\";\"NameOfStation\";\"Line\";\"Longitude_WGS84\";\"Latitude_WGS84\";" +
+                                       "\"AdmArea\";\"District\";\"Year\";\"Month\";\"global_id\";\"geodata_center\";" +
+                                       "\"geoarea\";");
+                streamWriter.WriteLine("\"\u2116 п/п\";\"Станция метрополитена\";\"Линия\";\"Долгота в WGS-84\";" +
+                                       "\"Широта в WGS-84\";\"Административный округ\";\"Район\";\"Год\";\"Месяц\";" +
+                                       "\"global_id\";\"geodata_center\";\"geoarea\";");
                 await csv.WriteRecordsAsync(stations.ToList());
             }
         }

@@ -9,7 +9,7 @@ using Tools;
 using File = System.IO.File;
 
 namespace TelegramTool;
-// TODO: сообщить о правильном вводе фильтров
+
 public class TelegramManager
 {
     private readonly TelegramBotClient _client;
@@ -41,54 +41,52 @@ public class TelegramManager
     
     private async Task HandleUpdateAsync(ITelegramBotClient client, Update update, CancellationToken cancellationToken)
     {
-        State state = new State();
+        var state = new State();
         
         if (update.Message is { } message)
         {
-            long chatId = message.Chat.Id;
+            var chatId = message.Chat.Id;
             state.AddUser(chatId);
             
             if (message.Text is { } messageText)
             {
                 await HandleUserMessage(client, chatId, cancellationToken, messageText, state);
             }
-
             else if (message.Document is { } messageDocument)
             {
                 await HandleUserDocument(client, chatId, cancellationToken, messageDocument);
             }
         }
-        
         else if (update.CallbackQuery is { } callbackQuery)
         {
-            long chatId = callbackQuery.Message!.Chat.Id;
-            
-            if (callbackQuery.Data == "sortyear")
+            var chatId = callbackQuery.Message!.Chat.Id;
+
+            switch (callbackQuery.Data)
             {
-                MetroStation[] stations = await ProcessFile(state.PathToFile(chatId), client, chatId, cancellationToken);
-                Console.WriteLine(stations.Length);
-                await HandleCallbackSortYear(client, chatId, cancellationToken, stations, state);
-            }
-            
-            else if (callbackQuery.Data == "sortname")
-            {
-                MetroStation[] stations = await ProcessFile(state.PathToFile(chatId), client, chatId, cancellationToken);
-                await HandleCallbackSortName(client, chatId, cancellationToken, stations, state);
-            }
-            
-            else if (callbackQuery.Data == "filtername")
-            {
-                state.AddStateToUser(chatId, "name");
-            }
-            
-            else if (callbackQuery.Data == "filterline")
-            {
-                state.AddStateToUser(chatId, "line");
-            }
-            
-            else if (callbackQuery.Data == "filterboth")
-            {
-                state.AddStateToUser(chatId, "two");
+                case "sortyear":
+                {
+                    var stations = await ProcessFile(state.PathToFile(chatId), client, chatId, cancellationToken);
+                    await HandleCallbackSortYear(client, chatId, cancellationToken, stations, state);
+                    break;
+                }
+                case "sortname":
+                {
+                    var stations = await ProcessFile(state.PathToFile(chatId), client, chatId, cancellationToken);
+                    await HandleCallbackSortName(client, chatId, cancellationToken, stations, state);
+                    break;
+                }
+                case "filtername":
+                    await SayAboutRightValues(client, chatId, cancellationToken);
+                    state.AddStateToUser(chatId, "name");
+                    break;
+                case "filterline":
+                    await SayAboutRightValues(client, chatId, cancellationToken);
+                    state.AddStateToUser(chatId, "line");
+                    break;
+                case "filterboth":
+                    await SayAboutRightValues(client, chatId, cancellationToken);
+                    state.AddStateToUser(chatId, "two");
+                    break;
             }
         }
     }
@@ -96,7 +94,7 @@ public class TelegramManager
     // TODO: человеческий вывод ошибок
     private Task HandlePollingErrorAsync(ITelegramBotClient client, Exception exception, CancellationToken cancellationToken)
     {
-        string errorMessage = exception switch
+        var errorMessage = exception switch
         {
             ApiRequestException apiRequestException
                 => $"Telegram API Error:\n[{apiRequestException.ErrorCode}]\n{apiRequestException.Message}",
@@ -128,22 +126,40 @@ public class TelegramManager
                 var userState = state.UserState(chatId);
                 if (new[] { "name", "line", "two" }.All(str => str != userState))
                 {
-                    Console.WriteLine(userState);
                     await SayToEnterCommand(client, chatId, cancellationToken);
                     return;
                 }
             
-                MetroStation[] stations = await ProcessFile(state.PathToFile(chatId), client, chatId, cancellationToken);
+                var stations = await ProcessFile(state.PathToFile(chatId), client, chatId, cancellationToken);
+                
                 if (state.UserState(chatId) == "name")
                     await HandleCallbackFilterName(client, chatId, cancellationToken, stations, state, messageText);
                 else if (state.UserState(chatId) == "line")
                     await HandleCallbackFilterLine(client, chatId, cancellationToken, stations, state, messageText);
                 else if (state.UserState(chatId) == "two")
                 { 
-                    var splitText = messageText.Split();
-                    await HandleCallbackFilterBoth(client, chatId, cancellationToken, stations, 
-                        state, splitText[0], splitText[1]);
+                    var splitText = messageText.Split(";");
+
+                    if (splitText.Length == 2)
+                    {
+                        await HandleCallbackFilterBoth(client, chatId, cancellationToken, stations, 
+                            state, splitText[0], splitText[1]);
+                    }
+                    else
+                    {
+                        await client.SendStickerAsync(
+                            chatId: chatId,
+                            sticker: InputFile.FromFileId(
+                                "CAACAgIAAxkBAAELvwFl-YN7te2LzgGuZ51syGz6szWU1gACkzoAAvsUwUugxjZN527HszQE"),
+                            cancellationToken: cancellationToken);
+                        await client.SendTextMessageAsync(
+                            chatId: chatId,
+                            text: "Требуются два значения, разделенные точкой с запятой (Выхино;Январь)!\n" +
+                                  "Выбери фильтр в меню снова и введи корректные данные!",
+                            cancellationToken: cancellationToken);
+                    }
                 }
+                
                 state.AddStateToUser(chatId, "false");
                 break;
             }
@@ -174,7 +190,7 @@ public class TelegramManager
         var fileName = Path.GetFileNameWithoutExtension(document.FileName);
         fileName = $"{fileName}_{chatId}{fileExtension}";
         
-        char separator = Path.DirectorySeparatorChar;
+        var separator = Path.DirectorySeparatorChar;
         var destinationFilePath =
             $"..{separator}..{separator}..{separator}..{separator}WorkingFiles{separator}input{separator}{fileName}";
         
@@ -188,7 +204,7 @@ public class TelegramManager
 
         await SayFileDownloaded(client, chatId, cancellationToken);
         
-        State state = new State();
+        var state = new State();
         state.AddFileToUser(chatId, destinationFilePath);
         
         await ProcessFile(state.PathToFile(chatId), client, chatId, cancellationToken);
@@ -198,6 +214,7 @@ public class TelegramManager
         CancellationToken cancellationToken)
     {
         MetroStation[] stations;
+        
         if (Path.GetExtension(filePath) == ".csv")
         {
             var csvProcessing = new CsvProcessing();
@@ -270,19 +287,20 @@ public class TelegramManager
     private async Task HandleCallbackSortYear(ITelegramBotClient client, long chatId, 
         CancellationToken cancellationToken, MetroStation[] stations, State state)
     {
-        DataTool dataTool = new DataTool();
-        FileStream stream;
+        var dataTool = new DataTool();
         stations = dataTool.SortByYear(stations);
-        string filePath = state.PathToFile(chatId);
+        
+        FileStream stream;
+        var filePath = state.PathToFile(chatId);
 
         if (Path.GetExtension(filePath) == ".csv")
         {
-            CsvProcessing csvProcessing = new CsvProcessing(); 
+            var csvProcessing = new CsvProcessing(); 
             stream = await csvProcessing.Write(stations, state.PathToFile(chatId));
         }
         else
         {
-            JsonProcessing jsonProcessing = new JsonProcessing();
+            var jsonProcessing = new JsonProcessing();
             stream = await jsonProcessing.Write(stations, state.PathToFile(chatId));
         }
         
@@ -292,19 +310,20 @@ public class TelegramManager
     private async Task HandleCallbackSortName(ITelegramBotClient client, long chatId, 
         CancellationToken cancellationToken, MetroStation[] stations, State state)
     {
-        DataTool dataTool = new DataTool();
-        FileStream stream;
+        var dataTool = new DataTool();
         stations = dataTool.SortByName(stations);
-        string filePath = state.PathToFile(chatId);
+        
+        FileStream stream;
+        var filePath = state.PathToFile(chatId);
 
         if (Path.GetExtension(filePath) == ".csv")
         {
-            CsvProcessing csvProcessing = new CsvProcessing(); 
+            var csvProcessing = new CsvProcessing(); 
             stream = await csvProcessing.Write(stations, state.PathToFile(chatId));
         }
         else
         {
-            JsonProcessing jsonProcessing = new JsonProcessing();
+            var jsonProcessing = new JsonProcessing();
             stream = await jsonProcessing.Write(stations, state.PathToFile(chatId));
         }
         
@@ -314,19 +333,20 @@ public class TelegramManager
     private async Task HandleCallbackFilterName(ITelegramBotClient client, long chatId, 
         CancellationToken cancellationToken, MetroStation[] stations, State state, string filterValue)
     {
-        DataTool dataTool = new DataTool();
-        FileStream stream;
+        var dataTool = new DataTool();
         stations = dataTool.Filter(stations, filterValue, "name");
-        string filePath = state.PathToFile(chatId);
+        
+        FileStream stream;
+        var filePath = state.PathToFile(chatId);
 
         if (Path.GetExtension(filePath) == ".csv")
         {
-            CsvProcessing csvProcessing = new CsvProcessing(); 
+            var csvProcessing = new CsvProcessing(); 
             stream = await csvProcessing.Write(stations, state.PathToFile(chatId));
         }
         else
         {
-            JsonProcessing jsonProcessing = new JsonProcessing();
+            var jsonProcessing = new JsonProcessing();
             stream = await jsonProcessing.Write(stations, state.PathToFile(chatId));
         }
         
@@ -336,19 +356,20 @@ public class TelegramManager
     private async Task HandleCallbackFilterLine(ITelegramBotClient client, long chatId, 
         CancellationToken cancellationToken, MetroStation[] stations, State state, string filterValue)
     {
-        DataTool dataTool = new DataTool();
+        var dataTool = new DataTool();
+        var filePath = state.PathToFile(chatId);
+
         FileStream stream;
         stations = dataTool.Filter(stations, filterValue, "line");
-        string filePath = state.PathToFile(chatId);
 
         if (Path.GetExtension(filePath) == ".csv")
         {
-            CsvProcessing csvProcessing = new CsvProcessing(); 
+            var csvProcessing = new CsvProcessing(); 
             stream = await csvProcessing.Write(stations, state.PathToFile(chatId));
         }
         else
         {
-            JsonProcessing jsonProcessing = new JsonProcessing();
+            var jsonProcessing = new JsonProcessing();
             stream = await jsonProcessing.Write(stations, state.PathToFile(chatId));
         }
         
@@ -358,19 +379,20 @@ public class TelegramManager
     private async Task HandleCallbackFilterBoth(ITelegramBotClient client, long chatId, 
         CancellationToken cancellationToken, MetroStation[] stations, State state, string filterName, string filterMonth)
     {
-        DataTool dataTool = new DataTool();
+        var dataTool = new DataTool();
+        var filePath = state.PathToFile(chatId);
+
         FileStream stream;
         stations = dataTool.FilterByTwoFields(stations, filterName, filterMonth);
-        string filePath = state.PathToFile(chatId);
 
         if (Path.GetExtension(filePath) == ".csv")
         {
-            CsvProcessing csvProcessing = new CsvProcessing(); 
+            var csvProcessing = new CsvProcessing(); 
             stream = await csvProcessing.Write(stations, state.PathToFile(chatId));
         }
         else
         {
-            JsonProcessing jsonProcessing = new JsonProcessing();
+            var jsonProcessing = new JsonProcessing();
             stream = await jsonProcessing.Write(stations, state.PathToFile(chatId));
         }
         
@@ -436,6 +458,21 @@ public class TelegramManager
         await client.SendTextMessageAsync(
             chatId: chatId,
             text: "Упс, что-то не то!\nЗабыл, что делать?\nНапоминаю: жмыкай /help.",
+            cancellationToken: cancellationToken);
+    }
+    
+    private async Task SayAboutRightValues(ITelegramBotClient client, long chatId, CancellationToken cancellationToken)
+    {
+        await client.SendStickerAsync(
+            chatId: chatId,
+            sticker: InputFile.FromFileId(
+                "CAACAgIAAxkBAAELvwNl-YRPNsffUiJ_xT_0PSf2DLlQhAACahkAAppXkUvgH10YdvVpyjQE"),
+            cancellationToken: cancellationToken);
+        await client.SendTextMessageAsync(
+            chatId: chatId,
+            text: "Теперь нужно ввести значения для фильтров.\nЕсли были выбраны верхние пункты, " +
+                  "то достаточно ввести одно значение и отправить его.\nВ противном случае нужно ввести через пробел " +
+                  "значения названия станции и месяца (именно в таком порядке (Выхино;Январь)!)",
             cancellationToken: cancellationToken);
     }
 }

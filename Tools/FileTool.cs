@@ -4,11 +4,11 @@ public class FileTool
 {
     public void CreateDirectories()
     {
-        char separator = Path.DirectorySeparatorChar;
-        string mainDirectory = $"..{separator}..{separator}..{separator}..{separator}WorkingFiles";
-        string inputDirectory = $"..{separator}..{separator}..{separator}..{separator}WorkingFiles{separator}input";
-        string outputDirectory = $"..{separator}..{separator}..{separator}..{separator}WorkingFiles{separator}output";
-        string systemFiles = $"..{separator}..{separator}..{separator}..{separator}WorkingFiles{separator}system";
+        var separator = Path.DirectorySeparatorChar;
+        var mainDirectory = $"..{separator}..{separator}..{separator}..{separator}WorkingFiles";
+        var inputDirectory = $"..{separator}..{separator}..{separator}..{separator}WorkingFiles{separator}input";
+        var outputDirectory = $"..{separator}..{separator}..{separator}..{separator}WorkingFiles{separator}output";
+        var systemFiles = $"..{separator}..{separator}..{separator}..{separator}WorkingFiles{separator}system";
 
         try
         {
@@ -41,8 +41,8 @@ public class FileTool
 
     public void CreateFile()
     {
-        char separator = Path.DirectorySeparatorChar;
-        string systemFile =
+        var separator = Path.DirectorySeparatorChar;
+        var systemFile =
             $"..{separator}..{separator}..{separator}..{separator}WorkingFiles{separator}system{separator}users.txt";
 
         try

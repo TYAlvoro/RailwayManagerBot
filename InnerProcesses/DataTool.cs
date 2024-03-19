@@ -4,19 +4,12 @@ public class DataTool
 {
     public MetroStation[] Filter(MetroStation[] stations, string filterValue, string filterField)
     {
-        switch (filterField)
+        return filterField switch
         {
-            case "name":
-                foreach (var station in stations)
-                {
-                    Console.WriteLine(station.NameOfStation);
-                }
-                return stations.Where(station => station.NameOfStation == filterValue).ToArray();
-            case "line":
-                return stations.Where(station => station.Line == filterValue).ToArray();
-            default:
-                throw new ArgumentException("Недопустимое значение поля!");
-        }
+            "name" => stations.Where(station => station.NameOfStation == filterValue).ToArray(),
+            "line" => stations.Where(station => station.Line == filterValue).ToArray(),
+            _ => throw new ArgumentException("Недопустимое значение поля!")
+        };
     }
     
     public MetroStation[] FilterByTwoFields(MetroStation[] stations, string nameValue, string monthValue)

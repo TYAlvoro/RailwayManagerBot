@@ -11,10 +11,10 @@ internal static class Program
 {
     private static void Main()
     {
-        FileTool fileTool = new FileTool();
+        var fileTool = new FileTool();
         fileTool.CreateDirectories();
         fileTool.CreateFile();
-         TelegramManager telegramManager = new TelegramManager();
-         telegramManager.StartBot();
+        var telegramManager = new TelegramManager();
+        telegramManager.StartBot();
     }
 }

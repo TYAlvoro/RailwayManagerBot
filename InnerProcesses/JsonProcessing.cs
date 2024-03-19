@@ -19,7 +19,7 @@ public class JsonProcessing
             jsonString = await stream.ReadToEndAsync();
         }
 
-        List<MetroStation>? stations = new List<MetroStation>();
+        var stations = new List<MetroStation>();
 
         try
         {
@@ -38,9 +38,10 @@ public class JsonProcessing
 
     public async Task<FileStream> Write(MetroStation[] stations, string fileName)
     {
-        char separator = Path.DirectorySeparatorChar;
-        string filePath =
-            $"..{separator}..{separator}..{separator}..{separator}WorkingFiles{separator}output{Path.GetFileName(fileName)}";
+        var separator = Path.DirectorySeparatorChar;
+        var filePath =
+            $"..{separator}..{separator}..{separator}..{separator}WorkingFiles{separator}output{separator}{Path.GetFileName(fileName)}";
+        
         await using (var streamWriter = new StreamWriter(filePath))
         {
             var jsonString = JsonConvert.SerializeObject(stations, Formatting.Indented);

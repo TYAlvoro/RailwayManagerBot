@@ -1,6 +1,5 @@
-ID;NameOfStation;Line;Longitude_WGS84;Latitude_WGS84;AdmArea;District;Year;Month;global_id;geodata_center;geoarea;
+"ID";"NameOfStation";"Line";"Longitude_WGS84";"Latitude_WGS84";"AdmArea";"District";"Year";"Month";"global_id";"geodata_center";"geoarea";
 "№ п/п";"Станция метрополитена";"Линия";"Долгота в WGS-84";"Широта в WGS-84";"Административный округ";"Район";"Год";"Месяц";"global_id";"geodata_center";"geoarea";
-ID;NameOfStation;Line;Longitude_WGS84;Latitude_WGS84;AdmArea;District;Year;Month;global_id;geodata_center;geoarea
 3;Домодедовская;Замоскворецкая линия;37.71878552;55.61087011;Южный административный округ;район Орехово-Борисово Южное;1984;Июнь;1146052581;;
 2;Выхино;Таганско-Краснопресненская линия;37.81860885;55.80974166;Юго-Восточный административный округ;район Выхино-Жулебино;2021;Январь;1146052530;;
 3;Щёлковская;Арбатско-Покровская линия;37.79874691;55.80974166;Восточный административный округ;район Северное Измайлово;2021;Январь;1146052531;;
