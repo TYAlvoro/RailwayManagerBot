@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("InnerProcesses")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ff7490d3f7d63e0398fb0c0f149fd40d853d63c4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7e0fc5d08ad4a13c4e158ac683ce1ab5d5608588")]
 [assembly: System.Reflection.AssemblyProductAttribute("InnerProcesses")]
 [assembly: System.Reflection.AssemblyTitleAttribute("InnerProcesses")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

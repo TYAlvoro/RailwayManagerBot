@@ -9,7 +9,7 @@ using Tools;
 using File = System.IO.File;
 
 namespace TelegramTool;
-
+// TODO: сообщить о правильном вводе фильтров
 public class TelegramManager
 {
     private readonly TelegramBotClient _client;
@@ -62,15 +62,17 @@ public class TelegramManager
         else if (update.CallbackQuery is { } callbackQuery)
         {
             long chatId = callbackQuery.Message!.Chat.Id;
-            MetroStation[] stations = await ProcessFile(state.PathToFile(chatId), client, chatId, cancellationToken);
             
             if (callbackQuery.Data == "sortyear")
             {
+                MetroStation[] stations = await ProcessFile(state.PathToFile(chatId), client, chatId, cancellationToken);
+                Console.WriteLine(stations.Length);
                 await HandleCallbackSortYear(client, chatId, cancellationToken, stations, state);
             }
             
             else if (callbackQuery.Data == "sortname")
             {
+                MetroStation[] stations = await ProcessFile(state.PathToFile(chatId), client, chatId, cancellationToken);
                 await HandleCallbackSortName(client, chatId, cancellationToken, stations, state);
             }
             
@@ -109,32 +111,42 @@ public class TelegramManager
     private async Task HandleUserMessage(ITelegramBotClient client, long chatId, CancellationToken cancellationToken,
         string messageText, State state)
     {
-        if (messageText == "/start")
+        switch (messageText)
         {
-            await HandleCommandStart(client, chatId, cancellationToken);
-        }
-        else if (messageText == "/help")
-        {
-            await HandleCommandHelp(client, chatId, cancellationToken);
-        }
-        else if (messageText == "/work")
-        {
-            await HandleCommandWork(client, chatId, cancellationToken);
-        }
-        else
-        {
-            MetroStation[] stations = await ProcessFile(state.PathToFile(chatId), client, chatId, cancellationToken);
-            Console.WriteLine(state.UserState(chatId));
-            if (state.UserState(chatId) == "name")
-                await HandleCallbackFilterName(client, chatId, cancellationToken, stations, state, messageText);
-            else if (state.UserState(chatId) == "line")
-                await HandleCallbackFilterLine(client, chatId, cancellationToken, stations, state, messageText);
-            else if (state.UserState(chatId) == "two")
-            { 
-                var splitText = messageText.Split();
-                await HandleCallbackFilterBoth(client, chatId, cancellationToken, stations, 
-                    state, splitText[0], splitText[1]);
-            } 
+            case "/start":
+                await HandleCommandStart(client, chatId, cancellationToken);
+                break;
+            case "/help":
+                await HandleCommandHelp(client, chatId, cancellationToken);
+                break;
+            case "/work":
+                await HandleCommandWork(client, chatId, cancellationToken);
+                break;
+            
+            default:
+            {
+                var userState = state.UserState(chatId);
+                if (new[] { "name", "line", "two" }.All(str => str != userState))
+                {
+                    Console.WriteLine(userState);
+                    await SayToEnterCommand(client, chatId, cancellationToken);
+                    return;
+                }
+            
+                MetroStation[] stations = await ProcessFile(state.PathToFile(chatId), client, chatId, cancellationToken);
+                if (state.UserState(chatId) == "name")
+                    await HandleCallbackFilterName(client, chatId, cancellationToken, stations, state, messageText);
+                else if (state.UserState(chatId) == "line")
+                    await HandleCallbackFilterLine(client, chatId, cancellationToken, stations, state, messageText);
+                else if (state.UserState(chatId) == "two")
+                { 
+                    var splitText = messageText.Split();
+                    await HandleCallbackFilterBoth(client, chatId, cancellationToken, stations, 
+                        state, splitText[0], splitText[1]);
+                }
+                state.AddStateToUser(chatId, "false");
+                break;
+            }
         }
     }
 
@@ -411,6 +423,19 @@ public class TelegramManager
             chatId: chatId,
             text: "Отфильтровать:",
             replyMarkup: filterKeyboard,
+            cancellationToken: cancellationToken);
+    }
+
+    private async Task SayToEnterCommand(ITelegramBotClient client, long chatId, CancellationToken cancellationToken)
+    {
+        await client.SendStickerAsync(
+            chatId: chatId,
+            sticker: InputFile.FromFileId(
+                "CAACAgIAAxkBAAELvvBl-XBHpXk3QpslJVikPXEcREJ_-gACHRgAAq9XeEqFjdt8DbqGFjQE"),
+            cancellationToken: cancellationToken);
+        await client.SendTextMessageAsync(
+            chatId: chatId,
+            text: "Упс, что-то не то!\nЗабыл, что делать?\nНапоминаю: жмыкай /help.",
             cancellationToken: cancellationToken);
     }
 }

@@ -3,7 +3,7 @@
 public class State
 {
     private static readonly char Separator = Path.DirectorySeparatorChar;
-    private string _systemFile =
+    private readonly string _systemFile =
             $"..{Separator}..{Separator}..{Separator}..{Separator}WorkingFiles{Separator}system{Separator}users.txt";
     
     public void AddUser(long chatId)
@@ -21,10 +21,6 @@ public class State
         if (!lines.Any(line => line.Contains(chatId.ToString())))
         {
             lines.Add($"{chatId}: pass: false");
-        }
-        else
-        {
-            
         }
 
         using (var streamWriter = new StreamWriter(_systemFile))
@@ -50,7 +46,8 @@ public class State
         
         foreach (var line in lines.Where(line => line.Contains(chatId.ToString())))
         {
-            lines[Array.IndexOf(lines.ToArray(), line)] = $"{line.Split(": ")[0]}: {filePath}";
+            var values = line.Split(": ");
+            lines[Array.IndexOf(lines.ToArray(), line)] = $"{values[0]}: {filePath}: {values[2]}";
             break;
         }
 
@@ -91,35 +88,6 @@ public class State
         }
     }
     
-    public void AddValuesToUser(long chatId, string firstValue, string secondValue)
-    {
-        var lines = new List<string>();
-        
-        using (var streamReader = new StreamReader(_systemFile))
-        {
-            while (streamReader.ReadLine() is { } line)
-            {
-                lines.Add(line);
-            }
-        }
-        
-        foreach (var line in lines.Where(line => line.Contains(chatId.ToString())))
-        {
-            var values = line.Split(": ");
-            lines[Array.IndexOf(lines.ToArray(), line)] = 
-                $"{values[0]}: {values[1]}: {values[2]}: {firstValue}: {secondValue}";
-            break;
-        }
-
-        using (var streamWriter = new StreamWriter(_systemFile))
-        {
-            foreach (var line in lines)
-            {
-                streamWriter.WriteLine(line);
-            }
-        }
-    }
-    
     public string PathToFile(long chatId)
     {
         var lines = new List<string>();
@@ -139,7 +107,7 @@ public class State
             filePath = line.Split(": ")[1];
         }
 
-        return filePath!;
+        return filePath;
     }
     
     public string UserState(long chatId)
@@ -161,6 +129,6 @@ public class State
             state = line.Split(": ")[2];
         }
 
-        return state!;
+        return state;
     }
 }
