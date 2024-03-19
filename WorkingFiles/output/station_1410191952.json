@@ -1,0 +1,16 @@
+[
+  {
+    "Id": 2,
+    "NameOfStation": "Выхино",
+    "Line": "Таганско-Краснопресненская линия",
+    "Longitude": 0.0,
+    "Latitude": 0.0,
+    "AdmArea": "Юго-Восточный административный округ",
+    "District": "район Выхино-Жулебино",
+    "Year": 2050,
+    "Month": "Январь",
+    "GlobalId": 0,
+    "GeodataCenter": null,
+    "Geoarea": ""
+  }
+]

@@ -1,2 +1,4 @@
-1410191952: ..\..\..\..\WorkingFiles\input\station_1410191952_1410191952.csv: false
+1410191952: ..\..\..\..\WorkingFiles\input\station_1410191952.json: false
 541802268: pass
+848730206: ..\..\..\..\WorkingFiles\input\station-rate_848730206.csv: false
+705139095: pass: false

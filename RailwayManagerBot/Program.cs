@@ -19,7 +19,7 @@ internal static class Program
         var fileTool = new FileTool();
         fileTool.CreateDirectories();
         fileTool.CreateStateFile();
-        var telegramManager = new TelegramManager();
+        var telegramManager = new TelegramManager(logger);
         telegramManager.StartBot();
     }
 }
