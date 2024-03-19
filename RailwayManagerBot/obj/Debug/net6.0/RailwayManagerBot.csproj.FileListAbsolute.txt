@@ -24,3 +24,10 @@ D:\RiderProjects\RailwayManagerBot\RailwayManagerBot\bin\Debug\net6.0\Tools.pdb
 D:\RiderProjects\RailwayManagerBot\RailwayManagerBot\bin\Debug\net6.0\CsvHelper.dll
 D:\RiderProjects\RailwayManagerBot\RailwayManagerBot\bin\Debug\net6.0\InnerProcesses.dll
 D:\RiderProjects\RailwayManagerBot\RailwayManagerBot\bin\Debug\net6.0\InnerProcesses.pdb
+D:\RiderProjects\RailwayManagerBot\RailwayManagerBot\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
+D:\RiderProjects\RailwayManagerBot\RailwayManagerBot\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\RiderProjects\RailwayManagerBot\RailwayManagerBot\bin\Debug\net6.0\Microsoft.Extensions.Logging.dll
+D:\RiderProjects\RailwayManagerBot\RailwayManagerBot\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
+D:\RiderProjects\RailwayManagerBot\RailwayManagerBot\bin\Debug\net6.0\Microsoft.Extensions.Options.dll
+D:\RiderProjects\RailwayManagerBot\RailwayManagerBot\bin\Debug\net6.0\Microsoft.Extensions.Primitives.dll
+D:\RiderProjects\RailwayManagerBot\RailwayManagerBot\bin\Debug\net6.0\System.Diagnostics.DiagnosticSource.dll

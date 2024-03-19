@@ -9,6 +9,7 @@
 
     <ItemGroup>
       <PackageReference Include="CsvHelper" Version="31.0.2" />
+      <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.0-preview.2.24128.5" />
       <PackageReference Include="Telegram.Bot" Version="20.0.0-alpha.1" />
     </ItemGroup>
 

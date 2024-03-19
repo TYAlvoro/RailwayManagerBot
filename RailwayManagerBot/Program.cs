@@ -1,7 +1,4 @@
-﻿using System.Globalization;
-using CsvHelper;
-using CsvHelper.Configuration;
-using InnerProcesses;
+﻿using Microsoft.Extensions.Logging;
 using TelegramTool;
 using Tools;
 
@@ -11,10 +8,19 @@ internal static class Program
 {
     private static void Main()
     {
+        var separator = Path.DirectorySeparatorChar;
+        var logPath = $"..{separator}..{separator}..{separator}..{separator}var{separator}log.txt";
+        var loggerFactory = LoggerFactory.Create(builder =>
+        {
+            builder.AddProvider(new FileLoggerProvider(logPath));
+        });
+        
+        var logger = loggerFactory.CreateLogger("FileLogger");
         var fileTool = new FileTool();
         fileTool.CreateDirectories();
-        fileTool.CreateFile();
+        fileTool.CreateStateFile();
         var telegramManager = new TelegramManager();
         telegramManager.StartBot();
     }
 }
+

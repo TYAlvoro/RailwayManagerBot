@@ -8,10 +8,32 @@
     ".NETCoreApp,Version=v6.0": {
       "Tools/1.0.0": {
         "dependencies": {
+          "Microsoft.Extensions.Logging.Abstractions": "9.0.0-preview.2.24128.5",
           "Telegram.Bot": "20.0.0-alpha.1"
         },
         "runtime": {
           "Tools.dll": {}
+        }
+      },
+      "Microsoft.Extensions.DependencyInjection.Abstractions/9.0.0-preview.2.24128.5": {
+        "runtime": {
+          "lib/netstandard2.1/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.24.12805"
+          }
+        }
+      },
+      "Microsoft.Extensions.Logging.Abstractions/9.0.0-preview.2.24128.5": {
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.0-preview.2.24128.5",
+          "System.Buffers": "4.5.1",
+          "System.Memory": "4.5.5"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.24.12805"
+          }
         }
       },
       "Newtonsoft.Json/13.0.1": {
@@ -22,6 +44,8 @@
           }
         }
       },
+      "System.Buffers/4.5.1": {},
+      "System.Memory/4.5.5": {},
       "Telegram.Bot/20.0.0-alpha.1": {
         "dependencies": {
           "Newtonsoft.Json": "13.0.1"
@@ -41,12 +65,40 @@
       "serviceable": false,
       "sha512": ""
     },
+    "Microsoft.Extensions.DependencyInjection.Abstractions/9.0.0-preview.2.24128.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-o5j9Gk+qVb0wmOvP4OmGp4Q6KhGDebpwhtiUpoJyiksqFCxbYG4tt2fLaCtsj18CVy8+wVmG73FaYERz9MBe/w==",
+      "path": "microsoft.extensions.dependencyinjection.abstractions/9.0.0-preview.2.24128.5",
+      "hashPath": "microsoft.extensions.dependencyinjection.abstractions.9.0.0-preview.2.24128.5.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Logging.Abstractions/9.0.0-preview.2.24128.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-puBM+NCKWEee/RxKIsunXWkzvNGVS9DqpAUWavFlv1MQwcaHExPE8GYggSAOqVJU5Kv+FPRvd4su4pLiTh/jhg==",
+      "path": "microsoft.extensions.logging.abstractions/9.0.0-preview.2.24128.5",
+      "hashPath": "microsoft.extensions.logging.abstractions.9.0.0-preview.2.24128.5.nupkg.sha512"
+    },
     "Newtonsoft.Json/13.0.1": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-ppPFpBcvxdsfUonNcvITKqLl3bqxWbDCZIzDWHzjpdAHRFfZe0Dw9HmA0+za13IdyrgJwpkDTDA9fHaxOrt20A==",
       "path": "newtonsoft.json/13.0.1",
       "hashPath": "newtonsoft.json.13.0.1.nupkg.sha512"
+    },
+    "System.Buffers/4.5.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Rw7ijyl1qqRS0YQD/WycNst8hUUMgrMH4FCn1nNm27M4VxchZ1js3fVjQaANHO5f3sN4isvP4a+Met9Y4YomAg==",
+      "path": "system.buffers/4.5.1",
+      "hashPath": "system.buffers.4.5.1.nupkg.sha512"
+    },
+    "System.Memory/4.5.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-XIWiDvKPXaTveaB7HVganDlOCRoj03l+jrwNvcge/t8vhGYKvqV+dMv6G4SAX2NoNmN0wZfVPTAlFwZcZvVOUw==",
+      "path": "system.memory/4.5.5",
+      "hashPath": "system.memory.4.5.5.nupkg.sha512"
     },
     "Telegram.Bot/20.0.0-alpha.1": {
       "type": "package",

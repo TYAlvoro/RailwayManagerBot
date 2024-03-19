@@ -9,6 +9,7 @@ public class FileTool
         var inputDirectory = $"..{separator}..{separator}..{separator}..{separator}WorkingFiles{separator}input";
         var outputDirectory = $"..{separator}..{separator}..{separator}..{separator}WorkingFiles{separator}output";
         var systemFiles = $"..{separator}..{separator}..{separator}..{separator}WorkingFiles{separator}system";
+        var varDirectory = $"..{separator}..{separator}..{separator}..{separator}var";
 
         try
         {
@@ -16,6 +17,11 @@ public class FileTool
             {
                 Directory.CreateDirectory(mainDirectory);
                 Console.WriteLine("\"Рядом\" с папками проекта создана папка WorkingFiles для хранения файлов работы.");
+            }
+            if (!Directory.Exists(varDirectory))
+            {
+                Directory.CreateDirectory(varDirectory);
+                Console.WriteLine("\"Рядом\" с папками проекта создана папка var для хранения файлов логов.");
             }
             if (!Directory.Exists(inputDirectory))
             {
@@ -39,7 +45,7 @@ public class FileTool
         }
     }
 
-    public void CreateFile()
+    public void CreateStateFile()
     {
         var separator = Path.DirectorySeparatorChar;
         var systemFile =
