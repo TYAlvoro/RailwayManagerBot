@@ -41,7 +41,6 @@ public class TelegramManager
     
     private async Task HandleUpdateAsync(ITelegramBotClient client, Update update, CancellationToken cancellationToken)
     {
-        MetroStation[] stations = Array.Empty<MetroStation>();
         State state = new State();
         
         if (update.Message is { } message)
@@ -51,8 +50,7 @@ public class TelegramManager
             
             if (message.Text is { } messageText)
             {
-                Console.WriteLine(stations.Length);
-                await HandleUserMessage(client, chatId, cancellationToken, messageText, stations, state);
+                await HandleUserMessage(client, chatId, cancellationToken, messageText, state);
             }
 
             else if (message.Document is { } messageDocument)
@@ -64,7 +62,7 @@ public class TelegramManager
         else if (update.CallbackQuery is { } callbackQuery)
         {
             long chatId = callbackQuery.Message!.Chat.Id;
-            stations = await ProcessFile(state.PathToFile(chatId), client, chatId, cancellationToken);
+            MetroStation[] stations = await ProcessFile(state.PathToFile(chatId), client, chatId, cancellationToken);
             
             if (callbackQuery.Data == "sortyear")
             {
@@ -109,7 +107,7 @@ public class TelegramManager
     }
 
     private async Task HandleUserMessage(ITelegramBotClient client, long chatId, CancellationToken cancellationToken,
-        string messageText, MetroStation[] stations, State state)
+        string messageText, State state)
     {
         if (messageText == "/start")
         {
@@ -125,6 +123,8 @@ public class TelegramManager
         }
         else
         {
+            MetroStation[] stations = await ProcessFile(state.PathToFile(chatId), client, chatId, cancellationToken);
+            Console.WriteLine(state.UserState(chatId));
             if (state.UserState(chatId) == "name")
                 await HandleCallbackFilterName(client, chatId, cancellationToken, stations, state, messageText);
             else if (state.UserState(chatId) == "line")
