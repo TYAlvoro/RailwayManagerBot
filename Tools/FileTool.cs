@@ -1,9 +1,16 @@
 ﻿namespace Tools;
 
+/// <summary>
+/// Класс для работы с директориями и файлами.
+/// </summary>
 public class FileTool
 {
+    /// <summary>
+    /// Создание нужных для работы директорий.
+    /// </summary>
     public void CreateDirectories()
     {
+        // Инициализация путей до директорий.
         var separator = Path.DirectorySeparatorChar;
         var mainDirectory = $"..{separator}..{separator}..{separator}..{separator}WorkingFiles";
         var inputDirectory = $"..{separator}..{separator}..{separator}..{separator}WorkingFiles{separator}input";
@@ -11,6 +18,7 @@ public class FileTool
         var systemFiles = $"..{separator}..{separator}..{separator}..{separator}WorkingFiles{separator}system";
         var varDirectory = $"..{separator}..{separator}..{separator}..{separator}var";
 
+        // Попытка создания директорий.
         try
         {
             if (!Directory.Exists(mainDirectory))
@@ -44,13 +52,18 @@ public class FileTool
             Console.WriteLine($"Программа не имеет разрешения на создание нужной для ее корректной работы папки!: {ex}");
         }
     }
-
+    
+    /// <summary>
+    /// Создание файла для стейтов.
+    /// </summary>
     public void CreateStateFile()
     {
+        // Инициализация пути до файла.
         var separator = Path.DirectorySeparatorChar;
         var systemFile =
             $"..{separator}..{separator}..{separator}..{separator}WorkingFiles{separator}system{separator}users.txt";
 
+        // Попытка создания файла.
         try
         {
             if (File.Exists(systemFile)) return;

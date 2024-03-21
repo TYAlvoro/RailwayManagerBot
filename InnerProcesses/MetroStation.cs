@@ -3,6 +3,10 @@ using CsvHelper.Configuration.Attributes;
 
 namespace InnerProcesses;
 
+/// <summary>
+/// Класс, реализующий поведение объекта - станции.
+/// Некоторые поля nullable по причине наличия таковых в исходных файлах.
+/// </summary>
 public class MetroStation
 {
     [JsonPropertyName("ID")]

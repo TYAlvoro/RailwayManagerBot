@@ -1,13 +1,23 @@
 ﻿namespace Tools;
 
+/// <summary>
+/// Класс для хранения стейтов (состояний) каждого пользователя.
+/// Нужен для корректной обработки информации при наличии большой нагрузки на бота.
+/// </summary>
 public class State
 {
+    // Путь к файлу со стейтами.
     private static readonly char Separator = Path.DirectorySeparatorChar;
     private readonly string _systemFile =
             $"..{Separator}..{Separator}..{Separator}..{Separator}WorkingFiles{Separator}system{Separator}users.txt";
     
+    /// <summary>
+    /// Метод для добавления пользователя в файл.
+    /// </summary>
+    /// <param name="chatId">ID пользователя для создания уникального имени файла.</param>
     public void AddUser(long chatId)
     {
+        // Чтение информации из файла.
         var lines = new List<string>();
         
         using (var streamReader = new StreamReader(_systemFile))
@@ -18,11 +28,13 @@ public class State
             }
         }
         
+        // Если пользователь с таким ID не нашелся, добавляем его в файл.
         if (!lines.Any(line => line.Contains(chatId.ToString())))
         {
             lines.Add($"{chatId}: pass: false");
         }
 
+        // Запись обратно в файл.
         using (var streamWriter = new StreamWriter(_systemFile))
         {
             foreach (var line in lines)
@@ -32,8 +44,14 @@ public class State
         }
     }
 
+    /// <summary>
+    /// Метод для добавления пути до входного файла к конкретному пользователю.
+    /// </summary>
+    /// <param name="chatId">ID пользователя.</param>
+    /// <param name="filePath">Путь к входному файлу.</param>
     public void AddFileToUser(long chatId, string filePath)
     {
+        // Чтение файла.
         var lines = new List<string>();
         
         using (var streamReader = new StreamReader(_systemFile))
@@ -44,6 +62,7 @@ public class State
             }
         }
         
+        // Ищем пользователя с таким ID и перезаписываем информацию о файле для него.
         foreach (var line in lines.Where(line => line.Contains(chatId.ToString())))
         {
             var values = line.Split(": ");
@@ -51,6 +70,7 @@ public class State
             break;
         }
 
+        // Запись обратно в файл.
         using (var streamWriter = new StreamWriter(_systemFile))
         {
             foreach (var line in lines)
@@ -60,8 +80,14 @@ public class State
         }
     }
 
+    /// <summary>
+    /// Добавление стейта для пользователя.
+    /// </summary>
+    /// <param name="chatId">ID пользователя.</param>
+    /// <param name="state">Значение стейта фильтрации.</param>
     public void AddStateToUser(long chatId, string state)
     {
+        // Считывание информации из файла.
         var lines = new List<string>();
         
         using (var streamReader = new StreamReader(_systemFile))
@@ -72,6 +98,7 @@ public class State
             }
         }
         
+        // Ищем пользователя с таким ID и перезаписываем ему стейт.
         foreach (var line in lines.Where(line => line.Contains(chatId.ToString())))
         {
             var values = line.Split(": ");
@@ -79,6 +106,7 @@ public class State
             break;
         }
 
+        // Запись обратно в файл.
         using (var streamWriter = new StreamWriter(_systemFile))
         {
             foreach (var line in lines)
@@ -88,8 +116,14 @@ public class State
         }
     }
     
+    /// <summary>
+    /// Получение пути до входного файла для конкретного пользователя.
+    /// </summary>
+    /// <param name="chatId">ID пользователя.</param>
+    /// <returns>Путь до входного файла.</returns>
     public string PathToFile(long chatId)
     {
+        // Считывание информации из файла.
         var lines = new List<string>();
         
         using (var streamReader = new StreamReader(_systemFile))
@@ -100,6 +134,7 @@ public class State
             }
         }
 
+        // Поиск пользователя с нужным ID в файле и запись полученного пути в переменную.
         var filePath = String.Empty;
         
         foreach (var line in lines.Where(line => line.Contains(chatId.ToString())))
@@ -110,8 +145,14 @@ public class State
         return filePath;
     }
     
+    /// <summary>
+    /// Метод для получения метода фильтрации (стейта) пользователя.
+    /// </summary>
+    /// <param name="chatId">ID пользователя.</param>
+    /// <returns>Стейт фильтрации пользователя.</returns>
     public string UserState(long chatId)
     {
+        // Считывание информации из файла.
         var lines = new List<string>();
         
         using (var streamReader = new StreamReader(_systemFile))
@@ -122,6 +163,7 @@ public class State
             }
         }
 
+        // Поиск пользователя с нужным ID и запись его стейта в переменную.
         var state = String.Empty;
         
         foreach (var line in lines.Where(line => line.Contains(chatId.ToString())))

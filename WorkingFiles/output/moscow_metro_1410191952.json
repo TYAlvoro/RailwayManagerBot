@@ -1,0 +1,58 @@
+[
+  {
+    "Id": 1,
+    "NameOfStation": "Баррикадная",
+    "Line": "Таганско-Краснопресненская линия",
+    "Longitude": 0.0,
+    "Latitude": 0.0,
+    "AdmArea": "Центральный административный округ",
+    "District": "район Пресненский",
+    "Year": 2014,
+    "Month": "Август",
+    "GlobalId": 0,
+    "GeodataCenter": null,
+    "Geoarea": null
+  },
+  {
+    "Id": 9,
+    "NameOfStation": "Чертановская",
+    "Line": "Серпуховско-Тимирязевская линия",
+    "Longitude": 0.0,
+    "Latitude": 0.0,
+    "AdmArea": "Юго-Западный административный округ",
+    "District": "район Чертаново Южное",
+    "Year": 2008,
+    "Month": "Август",
+    "GlobalId": 0,
+    "GeodataCenter": null,
+    "Geoarea": null
+  },
+  {
+    "Id": 14,
+    "NameOfStation": "Марьина Роща",
+    "Line": "Таганско-Краснопресненская линия",
+    "Longitude": 0.0,
+    "Latitude": 0.0,
+    "AdmArea": "Центральный административный округ",
+    "District": "район Марьина Роща",
+    "Year": 2003,
+    "Month": "Август",
+    "GlobalId": 0,
+    "GeodataCenter": null,
+    "Geoarea": null
+  },
+  {
+    "Id": 23,
+    "NameOfStation": "Курская",
+    "Line": "Арбатско-Покровская линия",
+    "Longitude": 0.0,
+    "Latitude": 0.0,
+    "AdmArea": "Центральный административный округ",
+    "District": "район Басманный",
+    "Year": 1994,
+    "Month": "Август",
+    "GlobalId": 0,
+    "GeodataCenter": null,
+    "Geoarea": null
+  }
+]

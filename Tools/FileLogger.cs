@@ -1,39 +1,71 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace Tools;
-
-public class FileLogger : ILogger
+namespace Tools
 {
-    private readonly string _filePath;
-    private readonly object _lockObj = new ();
-
-    public FileLogger(string filePath)
+    /// <summary>
+    /// Класс, представляющий логгер для записи в файл.
+    /// </summary>
+    public class FileLogger : ILogger
     {
-        _filePath = filePath;
-    }
+        private readonly string _filePath;
+        private readonly object _lockObj = new ();
 
-    public IDisposable? BeginScope<TState>(TState state) => null;
-
-    public bool IsEnabled(LogLevel logLevel) => true;
-
-    public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, 
-        Func<TState, Exception, string> formatter)
-    {
-        if (!IsEnabled(logLevel))
-            return;
-
-        lock (_lockObj)
+        /// <summary>
+        /// Создает новый экземпляр класса FileLogger с указанным путем к файлу лога.
+        /// </summary>
+        /// <param name="filePath">Путь к файлу лога.</param>
+        public FileLogger(string filePath)
         {
-            try
+            _filePath = filePath;
+        }
+
+        /// <summary>
+        /// Начинает новую область логирования. В данной реализации не используется.
+        /// </summary>
+        /// <typeparam name="TState">Тип состояния.</typeparam>
+        /// <param name="state">Состояние.</param>
+        /// <returns>Возвращает null.</returns>
+        public IDisposable? BeginScope<TState>(TState state) => null;
+
+        /// <summary>
+        /// Проверяет, включен ли указанный уровень логирования.
+        /// </summary>
+        /// <param name="logLevel">Уровень логирования для проверки.</param>
+        /// <returns>Возвращает true, если указанный уровень логирования включен, иначе false.</returns>
+        public bool IsEnabled(LogLevel logLevel) => true;
+
+        /// <summary>
+        /// Записывает сообщение в файл лога.
+        /// </summary>
+        /// <typeparam name="TState">Тип состояния.</typeparam>
+        /// <param name="logLevel">Уровень логирования.</param>
+        /// <param name="eventId">Идентификатор события.</param>
+        /// <param name="state">Состояние.</param>
+        /// <param name="exception">Исключение (если есть).</param>
+        /// <param name="formatter">Функция форматирования сообщения.</param>
+        public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, 
+            Func<TState, Exception, string> formatter)
+        {
+            // Проверяем, включено ли логирование на указанном уровне
+            if (!IsEnabled(logLevel))
+                return;
+
+            // Блокируем объект для синхронизации доступа к файлу лога
+            lock (_lockObj)
             {
-                using (var writer = new StreamWriter(_filePath, true))
+                try
                 {
-                    writer.WriteLine($"{DateTime.Now} [{logLevel}] - {formatter(state, exception)}");
+                    // Записываем сообщение в файл лога
+                    using (var writer = new StreamWriter(_filePath, true))
+                    {
+                        writer.WriteLine($"{DateTime.Now} [{logLevel}] - {formatter(state, exception)}");
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Ошибка при записи в лог: {ex.Message}");
+                catch (Exception ex)
+                {
+                    // В случае ошибки выводим сообщение в консоль
+                    Console.WriteLine($"Ошибка при записи в лог: {ex.Message}");
+                }
             }
         }
     }

@@ -1,4 +1,5 @@
-1410191952: ..\..\..\..\WorkingFiles\input\station_1410191952.json: false
+1410191952: ..\..\..\..\WorkingFiles\input\moscow_metro_1410191952.json: false
 541802268: pass
 848730206: ..\..\..\..\WorkingFiles\input\station-rate_848730206.csv: false
-705139095: pass: false
+705139095: ..\..\..\..\WorkingFiles\input\geraldic-signs_705139095.csv: false
+745321595: ..\..\..\..\WorkingFiles\input\station-rate_745321595.csv: false
